@@ -1,0 +1,9 @@
+{
+  "name": "mean-seed",
+  "version": "0.0.1",
+  "description": "Any application",
+  "main": "index.js",
+  "author": "Gus",
+  "license": "MIT",
+  "private": false
+}
