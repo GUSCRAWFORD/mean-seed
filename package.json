@@ -5,5 +5,19 @@
   "main": "index.js",
   "author": "Gus",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "scripts": {
+    "start": "pm2 kill && pm2 start local-ecosystem.config.js",
+    "mongod:auth-disabled": "pm2 start mongodb",
+    "mongod:auth-enabled": "cd mongodb && pm2 start npm -- run  start:auth-enabled",
+    "mongodb:reset-admin": "pm2 kill && yarn mongod:auth-disabled && cd mongodb && yarn create:admin",
+    "mongodb:reset-app-users": "pm2 kill && yarn mongod:auth-enabled && cd mongodb && yarn create:app-users",
+    "mongodb:reset-users": "yarn mongodb:reset-admin && yarn mongodb:reset-app-users",
+    "build:api": "cd api && yarn build",
+    "build:models": "cd models && yarn build"
+  },
+  "devDependencies": {
+    "pm2": "^3.2.2",
+    "typescript": "^2.7.2"
+  }
 }
