@@ -18,9 +18,18 @@ TS = ()=>`🕓  ${new Date().toLocaleString('en-US')}`
 
 db = {
     admin: mongo.getDB('admin')
+},
+auth = {
+    factory : (dbName, admin)=>()=>{
+        print(
+            `🔑  Authenticating with ${admin?ADMIN_TYPE:APP_DBS[dbName]}: `
+            + (db[dbName].auth(admin?ADMIN_TYPE:APP_DBS[dbName], admin?DB_ADMIN_PWD:APP_USERS[APP_DBS[dbName]])?`✅`:`❌`)
+            + `\n\t${TS()}`
+        );
+    }
 };
-
+auth.admin = auth.factory(ADMIN_TYPE, true);
 Object.keys(APP_DBS).forEach( appDbName=>{
     db[appDbName] = mongo.getDB(appDbName);
-    if (AUTH) db[appDbName].auth(APP_DBS[appDbName], APP_USERS[APP_DBS[appDbName]]);
+    if (AUTH) auth[appDbName] = auth.factory(appDbName);
 } );
