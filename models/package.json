@@ -3,5 +3,9 @@
   "version": "0.0.1",
   "main": "dist/bin/index.js",
   "types":"dist/lib/index.d.ts",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts":{
+    "clean": "echo \"\n🗑  Cleaning Models...\" && rm -Rf dist",
+    "build": "echo \"\n🛠  Building Models...\" && cd src && tsc --diagnostics"
+  }
 }

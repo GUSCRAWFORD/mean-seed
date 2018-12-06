@@ -20,6 +20,16 @@ module.exports = {
       script:'mongod',
       cwd:'mongodb',
       args:'--port 27017 -f config/mongod.conf'
+    },
+    {
+      script:'tsc',
+      cwd:'./api/src',
+      args:'--watch'
+    },
+    {
+      name:'api',
+      script:'./api/bin/www.js',
+      watch:'./api/bin'
     }
   ],
 

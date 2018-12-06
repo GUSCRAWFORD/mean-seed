@@ -1,9 +1,15 @@
-var express = require('express');
-var router = express.Router();
-
+const express = require('express'), router = express.Router();
+const createError = require('http-errors');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.json({message:'respond with a resource'});
 });
-
-module.exports = router;
+router.get('/login', (req, res, next)=>{
+  try {
+    next(createError('x'))
+  }
+  catch (e) {
+    next(createError(e))
+  }
+})
+export { router };

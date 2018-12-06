@@ -1,9 +1,10 @@
 {
   "extends":"../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../dist/bin",
+    "outDir": "../bin",
     "declaration": true,
-    "declarationDir": "../dist/lib",
-    "noImplicitAny": false
+    "declarationDir": "../lib",
+    "noImplicitAny": false,
+    "sourceMap": true
   }
 }
