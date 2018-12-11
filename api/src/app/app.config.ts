@@ -1,12 +1,10 @@
 
-import { routes } from './routes';
+import { config as routes} from './route.config';
 const createError = require('http-errors');
 import { TranslateService } from './services';
 TranslateService.init(['en']);
 export const config = function (app) {
-  Object.keys(routes).forEach(route=>{
-    app.use(`/${route}`, routes[route])
-  });
+  routes(app);
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
     next(createError(404));
