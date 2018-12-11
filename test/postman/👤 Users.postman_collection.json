@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "4a0c8f0b-f3a3-4835-b671-26a9f08ea745",
+		"name": "👤 Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "✳️ All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api}}/users",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "🔎 Users...",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api}}/users?$filter=username eq 'x'",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "$filter",
+							"value": "username eq 'x'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "🔑 Login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}

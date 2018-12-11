@@ -1,0 +1,16 @@
+{
+	"id": "a16f67bf-7aeb-4224-80b5-d6085b7c28cc",
+	"values": [
+		{
+			"key": "roles.super",
+			"value": "{\"id\":1000,\"name\":\"super\"}",
+			"type": "text",
+			"description": "",
+			"enabled": true
+		}
+	],
+	"name": "API Test Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2018-12-11T17:10:38.845Z",
+	"_postman_exported_using": "Postman/6.5.3"
+}
