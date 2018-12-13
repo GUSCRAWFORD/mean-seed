@@ -6,9 +6,9 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@jyv/core/-/core-1.0.1.tgz#de09ab6e60f68743d953c48aa40fdc5fbafcf592"
 
-"@jyv/mongo@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@jyv/mongo/-/mongo-1.0.1.tgz#e8f36e5f289c3c7dae823f7f51a1e9ab92f6e580"
+"@jyv/mongo@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@jyv/mongo/-/mongo-1.0.2.tgz#c049f0f7ad89499e530ad7f3d9e4f28b37884bbc"
 
 "@types/node@^8":
   version "8.10.38"

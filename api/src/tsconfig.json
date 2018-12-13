@@ -1,10 +1,14 @@
 {
   "extends":"../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../bin",
+    "outDir": "../dist/bin",
+    "baseUrl":"../../",
+    "rootDirs":["./","../../models/src"],
+
+    "sourceMap": true,
+    
     "declaration": true,
-    "declarationDir": "../lib",
-    "noImplicitAny": false,
-    "sourceMap": true
+    "declarationDir": "../dist/lib",
+    "noImplicitAny": false
   }
 }
