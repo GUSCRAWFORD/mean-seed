@@ -26,11 +26,11 @@ module.exports = {
       cwd:'./api/src',
       args:'--watch'
     }
-    ,{
-      name:'api',
-      script:'./api/dist/bin/api/src/www.js',
-      watch:'./api/dist/bin'
-    }
+    // ,{
+    //   name:'api',
+    //   script:'./api/dist/bin/api/src/www.js',
+    //   watch:'./api/dist/bin'
+    // }
   ],
 
   /**

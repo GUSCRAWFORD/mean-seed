@@ -1,9 +1,9 @@
-import { TS } from "./timestamp";
+import { TS } from "../services/timestamp";
 
 const express = require('express');
 const createError = require('http-errors');
 export const config = function (app) {
-    const { routes } = require('./routes');
+    const { routes } = require('../routes');
     Object.keys(routes).forEach(route=>{
         app.use(`/${route}`, routes[route].router)
     });
@@ -21,7 +21,8 @@ export class RouteFactory {
                 this.router[method](routePath, async (request, response, next)=>{
                     var result;
                     try {
-                         await routeMap[routePath][method](request, response, next);
+                         result = await routeMap[routePath][method](request, response, next);
+                         response.json(result);
                     } catch (exception) {
                         console.error(exception);
                         console.error(`\t${TS()}`);

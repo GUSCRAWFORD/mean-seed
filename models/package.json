@@ -1,8 +1,8 @@
 {
   "name": "models",
   "version": "0.0.1",
-  "main": "dist/bin/index.js",
-  "types":"dist/lib/index.d.ts",
+  "main": "bin/index.js",
+  "types":"lib/index.d.ts",
   "license": "MIT",
   "scripts":{
     "clean": "echo \"\n🗑  Cleaning Models...\" && rm -Rf dist",

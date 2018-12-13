@@ -1,7 +1,7 @@
 
 import { config as routes} from './route.config';
 const createError = require('http-errors');
-import { TranslateService } from './services';
+import { TranslateService } from '../services/index';
 TranslateService.init(['en']);
 export const config = function (app) {
   routes(app);
