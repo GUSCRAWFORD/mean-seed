@@ -3,3 +3,4 @@
 **/lib
 **/dist
 .vscode
+**/.nyc_output

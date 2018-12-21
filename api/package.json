@@ -6,8 +6,10 @@
     "start": "node ./dist/bin/src/www",
     "clean": "echo \"\n🗑  Cleaning API...\" && rm -Rf dist",
     "build": "echo \"\n🛠  Building API...\" && cd src && tsc --diagnostics",
-    "build:test": "echo \"⚗️  Building API Tests...\" && cd test && tsc --diagnostics",
-    "test": "echo \"🔬  Running Unit Tests...\" && yarn build:test && mocha dist/test/api/test/test.js"
+    "build:test": "echo \"⚙️  Building API Tests...\" && cd test && tsc",
+    "mocha":"echo \"☕️  Running Mocha...\" && mocha dist/test/api/test/test.js",
+    "test": "echo \"🔬  Running Unit Tests...\" && yarn build:test && yarn mocha",
+    "test:coverage":"echo \"📊  Running Coverage Report...\" && yarn nyc mocha dist/test/api/test/test.js"
   },
   "dependencies": {
     "@jyv/core": "^1.0.1",
@@ -33,6 +35,7 @@
     "@types/request": "^2.48.1",
     "@types/request-promise-native": "^1.0.15",
     "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "sinon": "^7.2.2",

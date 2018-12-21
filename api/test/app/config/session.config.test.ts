@@ -1,34 +1,34 @@
 import * as Request from 'request-promise-native';
 import { UNAUTHORIZED } from 'http-status-codes';
-import { describe, it, afterEach } from 'mocha';
+import 'mocha';
 import { equal } from 'assert';
 
-process.env.PORT = '3001';
-require('../../../src/www');    // Start the server
-import { routes } from '../../../src/app/routes';
+process.env.PORT = '3000';
+// require('../../../src/www');    // Start the server
+//import { routes } from '../../../src/app/routes';
 
-const USERS_ROUTE = 'users';
-describe(`👤  User routes /${USERS_ROUTE}`, ()=>{
-    describe(`GET`, async ()=>{
-        //console.info(routes);
-        it('works', async ()=>{
-            var result;
-            try {
-                result = await Request.get(`http://localhost:${process.env.PORT}/${USERS_ROUTE}`);
-            }
-            catch(e) {
-                //console.info(JSON.stringify(e));
-                equal(e.statusCode, UNAUTHORIZED)
-            }
-            equal('x','x');
-            return result;
-        });
-        it('no works', async()=>{
-
-            equal('x','y');
-
-            return true;
-        });
+//const USERS_ROUTE = 'users';
+describe(`⚙️  User Route config`, function (){
+    //console.info(routes);
+    it(`http://localhost:${process.env.PORT}/users returns "unauthorized" (${UNAUTHORIZED}`, async function() {
+        var result;
+        try {
+            result = await Request.get(`http://localhost:${process.env.PORT}/users`);
+        }
+        catch(e) {
+            equal(e.statusCode, UNAUTHORIZED)
+        }
+        return result;
+    });
+    it(`http://localhost:${process.env.PORT}/users/x returns "unauthorized" (${UNAUTHORIZED}`, async function () {
+        var result;
+        try {
+            result = await Request.get(`http://localhost:${process.env.PORT}/users/x`);
+        }
+        catch(e) {
+            equal(e.statusCode, UNAUTHORIZED)
+        }
+        return result;
     });
 });
 //process.exit(0);
