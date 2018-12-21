@@ -15,7 +15,9 @@
     "mongodb:reset-app-users": "echo \"👥  ♻️ Re-creating MongoDB app users\" && pm2 kill && yarn mongod:auth-enabled && cd mongodb && yarn create:app-users",
     "mongodb:reset-users": "echo \"♻️  Re-creating MongoDB users\" && yarn mongodb:reset-admin && yarn mongodb:reset-app-users",
     "build:api": "echo \"☁️  Building api\" &&cd api && yarn build",
-    "build:models": "echo \"🗳  Building models\" && cd models && yarn build"
+    "build:models": "echo \"🗳  Building models\" && cd models && yarn build",
+    "test":"yarn test:api",
+    "test:api":"cd api && yarn test:coverage"
   },
   "devDependencies": {
     "dotenv": "^6.1.0",
