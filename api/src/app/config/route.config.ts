@@ -5,11 +5,11 @@ const createError = require('http-errors');
 export const config = function (app:any) {
     const { routes } = require('../routes');
     Object.keys(routes).forEach(route=>{
-        //console.info(`${route} (${JSON.stringify(routes[route])})`)
         app.use(`${route}`, routes[route].router)
     });
 }
 export class RouteFactory {
+    static expressInstance = express;
     constructor (
         public path:any,
         public routeMap:{
@@ -27,7 +27,7 @@ export class RouteFactory {
                         this.sessionProtection.protects(`${this.path}${routePath}`)
                     );
                 routerArguments.push(
-                    async (request:any, response:any, next:any)=>{
+                    routeMap[routePath][method][`$handle_${method}_${this.path}${routePath}`] = async (request:any, response:any, next:any)=>{
                         var result;
                         try {
                             result = await routeMap[routePath][method](request, response, next);
@@ -39,43 +39,9 @@ export class RouteFactory {
                         }
                     }
                 );
-                //console.info(routerArguments)
                 this.router[method].apply(this.router, routerArguments);
-                //console.info(this.sessionProtection)
-                // if (this.sessionProtection)
-                //     this.router[method](
-                //         routePath,
-                //         this.sessionProtection.protects(`${this.path}${routePath}`),
-                //         async (request:any, response:any, next:any)=>{
-                //             var result;
-                //             try {
-                //                 result = await routeMap[routePath][method](request, response, next);
-                //                 response.json(result);
-                //             } catch (exception) {
-                //                 console.error(exception);
-                //                 console.error(`\t${TS()}`);
-                //                 next(createError(exception));
-                //             }
-                //         }
-                //     );
-                // else
-                // console.info(routePath)
-                //     this.router[method](
-                //         routePath,
-                //         async (request:any, response:any, next:any)=>{
-                //             var result;
-                //             try {
-                //                 result = await routeMap[routePath][method](request, response, next);
-                //                 response.json(result);
-                //             } catch (exception) {
-                //                 console.error(exception);
-                //                 console.error(`\t${TS()}`);
-                //                 next(createError(exception));
-                //             }
-                //         }
-                //     );
             });
         });
     }
-    router = express.Router();
+    router = RouteFactory.expressInstance.Router();
 }

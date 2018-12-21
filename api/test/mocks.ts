@@ -6,14 +6,14 @@ export class MockReqHandler {
 }
 export class MockApp extends MockReqHandler {
     static instance = new MockApp();
-    Router() {
-        return new MockRouter();
-    }
 }
 export class MockExpress {
     static instance = new MockExpress();
     express () {
         return MockApp.instance;
+    }
+    Router() {
+        return new MockRouter();
     }
 }
 export class MockRouter extends MockReqHandler {

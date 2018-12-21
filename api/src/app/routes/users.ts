@@ -18,14 +18,6 @@ export const route = new RouteFactory(
         return UsersService.instance.read(req.params.key, req.query);
       }
     }
-  //   ,
-  //   '/login':{
-  //     get: async (req, res, next)=>{
-  //       var nothing = null;
-  //       (nothing as any).something;
-  //       return nothing;
-  //     }
-  //   }
   },
   sessionProtection
 );
