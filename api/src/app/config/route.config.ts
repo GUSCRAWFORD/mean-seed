@@ -12,12 +12,12 @@ export const config = function (app:any) {
 export class RouteFactory {
     constructor (
         public path:any,
-        private routeMap:{
+        public routeMap:{
             [key:string]:{
                 [key:string]:(request:any, response:any, next:(any:any)=>any)=>Promise<any>
             }
         },
-        private sessionProtection?:Protection
+        public sessionProtection?:Protection
     ) {
         Object.keys(this.routeMap).forEach(routePath=>{
             Object.keys(routeMap[routePath]).forEach(method=>{
@@ -26,17 +26,19 @@ export class RouteFactory {
                     routerArguments.push(
                         this.sessionProtection.protects(`${this.path}${routePath}`)
                     );
-                routerArguments.push(async (request:any, response:any, next:any)=>{
-                    var result;
-                    try {
-                        result = await routeMap[routePath][method](request, response, next);
-                        response.json(result);
-                    } catch (exception) {
-                        console.error(exception);
-                        console.error(`\t${TS()}`);
-                        next(createError(exception));
+                routerArguments.push(
+                    async (request:any, response:any, next:any)=>{
+                        var result;
+                        try {
+                            result = await routeMap[routePath][method](request, response, next);
+                            response.json(result);
+                        } catch (exception) {
+                            console.error(exception);
+                            console.error(`\t${TS()}`);
+                            next(createError(exception));
+                        }
                     }
-                });
+                );
                 //console.info(routerArguments)
                 this.router[method].apply(this.router, routerArguments);
                 //console.info(this.sessionProtection)

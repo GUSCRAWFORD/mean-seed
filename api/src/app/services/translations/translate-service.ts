@@ -14,7 +14,7 @@ export class TranslateService {
         var loading:Promise<InMemoryFile>[] = [];
         console.info(`🈂️  Loading translations: ${languages}`)
         languages.forEach(lang=>{
-            let translationFilename = join(process.cwd(),'api','translations',`${lang}.json`);
+            let translationFilename = join(process.cwd(),'translations',`${lang}.json`);
             loading.push(new File(translationFilename).load()
                 .catch(x=>{throw new Error (`Cannot load translation file: ${translationFilename}`)})
                 .then(done=>{

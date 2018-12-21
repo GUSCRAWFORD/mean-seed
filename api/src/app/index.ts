@@ -12,13 +12,13 @@ import { config } from './config/app.config';
 const app = express();
 
 // view engine setup
-app.set('views', path.join(process.cwd(),'api','views'));
+app.set('views', path.join(process.cwd(),'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(process.cwd(),'api','public')));
+app.use(express.static(path.join(process.cwd(),'public')));
 config(app); // Configure specifics...
 export { app };

@@ -4,7 +4,9 @@ import { SessionConfigOptions, Protection } from './session.config';
 import { Passport } from 'passport';
 import { Strategy as JwtStrategy } from 'passport-jwt';
 import * as Jwt from 'jsonwebtoken';
+import { UNAUTHORIZED, OK } from 'http-status-codes';
 import { TS } from '../services/timestamp';
+export * from './session.config';
 // JWT Strategy
 abstract class ExtractJwt {
     static fromCookies (cookieName:string) {
@@ -98,7 +100,7 @@ export function config(
                 const GENERAL_FAIL = async (err:any)=>{
                     if (options.onFailedAuthenticate)
                         await options.onFailedAuthenticate(err, req);
-                    err.status = 401;
+                    err.status = UNAUTHORIZED;
                     throw err;
                 }
                 console.info(`🔑' JWT: ${JSON.stringify(success)}`);
@@ -143,7 +145,7 @@ export function config(
             let failure = `❌  👤  Login failed ${req&&req.body?('for '+req.body.username):''}:`;
             console.error(failure);
             console.error(e)
-            if(!e.status) e.status = 401;
+            if(!e.status) e.status = UNAUTHORIZED;
             next(e);
         }
         
@@ -156,7 +158,7 @@ export function config(
             expiryStamp = new Date().valueOf() + maxAgeMs;
             try {
                 var token = sign(user.name, {roles:user.roles});
-                res.writeHead(200, {
+                res.writeHead(OK, {
                     'Set-Cookie':options.headerName+'='+token
                         +`;Expires=${expiryStamp};Max-Age=${maxAgeMs};path=/;httponly;`,
                     'Content-Type':'application/json; charset=utf-8;'
@@ -184,7 +186,7 @@ export function config(
         if (DEBUG("jwt")) console.info(`👤  🚪  ${req.user.sub} logged out...`);
         try {
             if (options.onLogout) options.onLogout(req.user.sub);
-            res.writeHead(204, {'Set-Cookie':options.headerName+'=;Expires='+new Date(0)+';Max-Age=0;path=/;httponly'});
+            res.writeHead(OK, {'Set-Cookie':options.headerName+'=;Expires='+new Date(0)+';Max-Age=0;path=/;httponly'});
             res.end();
         }
         catch (e) {
