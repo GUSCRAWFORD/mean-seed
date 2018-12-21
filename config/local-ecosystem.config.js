@@ -29,7 +29,8 @@ module.exports = {
     ,{
       name:'api',
       script:'./api/dist/bin/api/src/www.js',
-      watch:'./api/dist/bin'
+      watch:'./api/dist/bin',
+      env: require('./local-env')
     }
   ],
 

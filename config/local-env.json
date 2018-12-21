@@ -1,0 +1,6 @@
+{
+    "JYV_CONFIG_DEBUG":"query",
+
+    "SESSION_HEADER":"x-token",
+    "SESSION_SECRET":"session-secret"
+}

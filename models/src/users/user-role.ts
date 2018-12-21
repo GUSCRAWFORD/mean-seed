@@ -1,6 +1,3 @@
-export class User {
-    roles: UserRole[] = [];
-}
 export class UserRole {
     constructor(
         public id:any,
