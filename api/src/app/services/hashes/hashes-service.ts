@@ -18,14 +18,14 @@ export class HashesService extends ODataV4MongoDbGenericRepo<HashEntry> {
      * @param data 
      * @param secret 
      */
-    async hash(data:string, secret:string): Promise<string> {
+    async hash(data:string, secret:string) {
         return new Promise((done, error)=>{
-            bcrypt.hash(data, 10, (err,hash)=>err?error(err):done(hash))
+            bcrypt.hash(data, 10, (err,hash)=>err?error(err):done(hash as string))
         });
     }
-    async compare(hash:string, to:string): Promise<boolean> {
+    async compare(hash:string, to:string) {
         return new Promise((done, error)=>{
-            bcrypt.compare(to, hash, (err, result)=>err?error(err):done(result));
+            bcrypt.compare(to, hash, (err, result)=>err?error(err):done(result as boolean));
         })
     }
 }

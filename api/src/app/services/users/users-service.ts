@@ -39,7 +39,7 @@ export class UsersService extends ODataV4MongoDbGenericRepo<User> {
         if (!hashEntry) return false;
         var verificationHash = await HashesService.instance.hash(password, UsersService.instance.secret);
         if (verificationHash === hashEntry.hash) {
-            this.hashes[verificationHash] = username;
+            this.hashes[verificationHash as string] = username;
             return true;
         }
         return false;
@@ -78,9 +78,9 @@ export class UsersService extends ODataV4MongoDbGenericRepo<User> {
                 :   HashesService.instance.hash(process.env.SYSTEM_PASSWORD as string, UsersService.defaultSecret)
                         .then(systemUserHash=>{
                             var systemUser = new SystemUser();
-                            systemUser.passwordHash = systemUserHash;
+                            systemUser.passwordHash = systemUserHash as string;
                             UsersService.instance.sessions[systemUser.username] = new UserSession(systemUser);
-                            UsersService.instance.hashes[systemUserHash] = systemUser.username;
+                            UsersService.instance.hashes[systemUserHash as string] = systemUser.username;
                             return resolve(systemUser);
                         }).catch(err=>reject(err))
         )
