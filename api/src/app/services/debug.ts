@@ -1,0 +1,1 @@
+export const DEBUG = (topic)=>process.env.DEBUG&&(process.env.DEBUG==='*'||process.env.DEBUG.split(',').find(t=>t===topic));

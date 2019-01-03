@@ -1,4 +1,9 @@
 import * as users from './users';
-export const routes = {
-  users:users.router
-};
+import * as fs from './fs';
+const controllers = [
+  users,
+  fs
+];
+export const routes = {};
+controllers.forEach(controller=>routes[controller.route.path]=controller.route);
+//console.info(routes)

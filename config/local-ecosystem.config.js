@@ -28,8 +28,10 @@ module.exports = {
     }
     ,{
       name:'api',
-      script:'./api/dist/bin/api/src/www.js',
-      watch:'./api/dist/bin'
+      cwd:'api',
+      script:'./dist/bin/api/src/www.js',
+      watch:'./dist/bin',
+      env: require('./local-env')
     }
   ],
 

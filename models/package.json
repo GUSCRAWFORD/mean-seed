@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts":{
     "clean": "echo \"\n🗑  Cleaning Models...\" && rm -Rf dist",
-    "build": "echo \"\n🛠  Building Models...\" && cd src && tsc --diagnostics"
+    "build": "echo \"\n🛠  Building Models...\" && cd src && tsc --diagnostics",
+    "rebuild": "yarn clean && yarn build"
   }
 }

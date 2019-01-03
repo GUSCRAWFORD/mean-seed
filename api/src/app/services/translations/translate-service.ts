@@ -1,19 +1,22 @@
 import { join } from 'path';
 import { TS } from '../timestamp'
 import { File, InMemoryFile } from '../files/files-service';
+export type TranslationMapFunctionRef = (...arg:string[])=>string;
+export type TranslationMap = TranslationMapFunctionRef | string;
+export type TranslationEntry = TranslationMap & {
+    pluralize:(count:any,str:string)=>string;
+};
 export class TranslateService {
     static instance = new TranslateService();
-    constructor () {}
-    static translations:{
-        [key: string]:string&{pluralize:(count:any,str:string)=>string}
-    } = {};
+    constructor () { }
+    static translations:{ [key: string]: TranslationEntry } = {};
     static async init(languages:string[]) {
         var loading:Promise<InMemoryFile>[] = [];
         console.info(`🈂️  Loading translations: ${languages}`)
         languages.forEach(lang=>{
-            let translationFilename = join(process.cwd(),'api','translations',`${lang}.json`);
-            loading.push(new File(translationFilename).load()
-                .catch(x=>{throw new Error (`Cannot load translation file: ${translationFilename}`)})
+            let translationFilename = join(process.cwd(),'translations',`${lang}.json`);
+            loading.push(new File(translationFilename, true).cat()
+                .catch(x=>{throw new Error (`Cannot load translation file: ${translationFilename} (${x})`)})
                 .then(done=>{
                     console.info(`\t${done.path}`);
                     TranslateService.translations[lang]=JSON.parse(done.content);
@@ -33,8 +36,11 @@ export class TranslateService {
     static capitalize(a:string) {
         return `${a.charAt(0).toLocaleUpperCase()}${a.slice(1)}`;
     }
-    static pluralize(a:string) {
-
+    static registerFunctionalMap(language:string | TranslationEntry, key:string, map:TranslationMapFunctionRef) {
+        if (!(language as TranslationEntry).pluralize)
+            language = TranslateService.translations[(language as string)];
+        (map as TranslationEntry).pluralize = (language as TranslationEntry).pluralize;
+        return language[key] = map;
     }
 }
 function pluralizeFactory(lang) {

@@ -1,0 +1,12 @@
+{
+  "extends":"../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../dist/test",
+    "baseUrl":"../../",
+    "rootDirs":["./","../../models/src"],
+
+    "sourceMap": true,
+    
+    "noImplicitAny": false
+  }
+}

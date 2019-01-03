@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-require('dotenv').config();
 require('source-map-support').install();
 /**
  * Module dependencies.
@@ -11,8 +10,8 @@ var http = require('http');
 /**
  * Get port from environment and store in Express.
  */
-
 var port = normalizePort(process.env.PORT || '3000');
+console.info(`☁️  Starting API on port ${port}`);
 app.set('port', port);
 
 /**
