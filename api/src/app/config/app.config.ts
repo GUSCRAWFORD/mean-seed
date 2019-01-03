@@ -25,7 +25,7 @@ export const config = function (app) {
         /** pass config options here */
         onLogin:(username, password)=>UsersService.instance.login(username, password),
         onLogout:(username)=>UsersService.instance.logout(username),
-        onProfile:(user)=>UsersService.instance.profile(user.username)
+        onProfile:(username)=>UsersService.instance.profile(username)
       })
     ]
   });

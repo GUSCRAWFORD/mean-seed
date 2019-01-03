@@ -93,6 +93,7 @@ export function config(
     app.get(`${options.logoutPath}`, authenticate, handleLogout);
     app.post(`${options.logoutPath}`, authenticate, handleLogout);
     app.put(`${options.logoutPath}`, authenticate, handleLogout);
+    app.get(`${options.logoutPath}`, authenticate, handleLogout);
     async function authenticate (req:any,res:any,next:any) {
         return PASSPORT.authenticate(
             "jwt",
@@ -104,12 +105,12 @@ export function config(
                     err.status = UNAUTHORIZED;
                     throw err;
                 }
-                console.info(`🔑' JWT: ${JSON.stringify(success)}`);
+                if (DEBUG('jwt'))
+                    console.info(`🔑' JWT: ${JSON.stringify(success)}`);
                 if (err) {
                     console.error(`🛑 err: ${err}`+TS());
                     GENERAL_FAIL(err);
                 }
-                console.error(`✅ success: ${JSON.stringify(success)}`+TS());
                 req.user = success;
                 if (!success)  {
                     GENERAL_FAIL(err = new Error('unauthorized'))
@@ -127,8 +128,10 @@ export function config(
         )(req,res,next);
     }
     async function getProfile(req:any,res:any,next:any) {
+        let profile: any = req.user;
         if (options.onProfile)
-            return options.onProfile(req.user);
+            profile = await options.onProfile(req.user.sub);
+        res.json(profile);
         return req.user;
     }
     async function handleLogin (req:any, res:any, next:any) {
@@ -184,10 +187,16 @@ export function config(
         }
     }
     async function handleLogout(req:any, res:any, next:any) {
+        let receipt:any = req.user;
         if (DEBUG("jwt")) console.info(`👤  🚪  ${req.user.sub} logged out...`);
         try {
-            if (options.onLogout) options.onLogout(req.user.sub);
-            res.writeHead(OK, {'Set-Cookie':options.headerName+'=;Expires='+new Date(0)+';Max-Age=0;path=/;httponly'});
+            if (options.onLogout)
+                receipt = await options.onLogout(req.user.sub);
+            res.writeHead(OK, {
+                'Content-type':'application/json; charset=utf-8;',
+                'Set-Cookie':options.headerName+'=;Expires='+new Date(0)+';Max-Age=0;path=/;httponly'
+            });
+            res.write(Buffer.from(JSON.stringify(receipt)))
             res.end();
         }
         catch (e) {

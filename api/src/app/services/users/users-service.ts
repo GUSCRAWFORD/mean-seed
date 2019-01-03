@@ -9,6 +9,7 @@ export class UserSession {
         public user:User
     ) {}
     start = new Date();
+    end?:Date;
 }
 export class UsersService extends ODataV4MongoDbGenericRepo<User> {
     static instance = new UsersService( );
@@ -44,6 +45,8 @@ export class UsersService extends ODataV4MongoDbGenericRepo<User> {
         return false;
     }
     async profile(username) {
+        console.info(`👤 fetching "${username}"...`)
+        console.info(UsersService.instance.sessions)
         if (UsersService.instance.sessions[username])
             return UsersService.instance.sessions[username].user;
         var profile : User = (
@@ -60,10 +63,11 @@ export class UsersService extends ODataV4MongoDbGenericRepo<User> {
         throw new Error(`AUTH_FAIL`);
     }
     async logout(username) {
-        var profile = this.sessions[username]
-        if (profile)
+        var sessionProfile = this.sessions[username];
+        sessionProfile.end = new Date();
+        if (sessionProfile)
             delete this.sessions[username];
-        return profile;
+        return sessionProfile.user;
     }
     static system = process.env.SYSTEM_PASSWORD
         ? new Promise<SystemUser>(

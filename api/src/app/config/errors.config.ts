@@ -27,6 +27,7 @@ export function config(app) {
           // set locals, only providing error in development
           res.locals.message = err.message;
           res.locals.error = verboseStackTrace ? err : {};
+          res.locals.title = `${err.message} (${err.status})`
           res.render('error');
       }
     });
