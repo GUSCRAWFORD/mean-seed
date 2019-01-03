@@ -1,5 +1,22 @@
 # Getting Started
 ![build](https://travis-ci.com/GUSCRAWFORD/mean-seed.svg?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a985b5bc91c864c70d4e/maintainability)](https://codeclimate.com/github/GUSCRAWFORD/mean-seed/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/a985b5bc91c864c70d4e/test_coverage)](https://codeclimate.com/github/GUSCRAWFORD/mean-seed/test_coverage)
+
+## What is MEAN Seed?
+
+"MEAN" seed is starter application with some elementary pre-fabricated components and configurations:
+
+1. A well-delegated express application
+2. A schema for statically declaring "route-maps" and managing security
+3. A **user** management service
+   1. JWT Session Management
+
+## Why is it Useful?
+
+1. The pre-fab components will broadly configure and use middleware as per common recipes
+2. Start with more out-of-the-box
+
 
 ## Envionrment Pre-requisites
 
