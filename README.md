@@ -1,4 +1,5 @@
 # Getting Started
+![build](https://travis-ci.com/GUSCRAWFORD/mean-seed.svg?branch=master)
 
 ## Envionrment Pre-requisites
 
