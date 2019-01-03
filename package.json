@@ -21,10 +21,7 @@
     "test:api": "cd api && yarn test:coverage"
   },
   "devDependencies": {
-    "@types/node": "^10.12.18",
-    "dotenv": "^6.1.0",
     "pm2": "^3.2.2",
-    "source-map-support": "^0.5.9",
     "typescript": "^2.7.2"
   }
 }
