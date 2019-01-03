@@ -8,21 +8,30 @@
     "build": "echo \"\n🛠  Building API...\" && cd src && tsc --diagnostics",
     "rebuild": "yarn clean && yarn build",
     "build:test": "echo \"⚙️  Building API Tests...\" && cd test && tsc",
-    "mocha":"echo \"☕️  Running Mocha...\" && mocha dist/test/api/test/test.js",
+    "mocha": "echo \"☕️  Running Mocha...\" && mocha dist/test/api/test/test.js",
     "test": "echo \"🔬  Running Unit Tests...\" && yarn build:test && yarn mocha",
-    "test:coverage":"echo \"📊  Running Unit Tests and Coverage Report...\" && yarn build:test && yarn nyc mocha dist/test/api/test/test.js"
+    "test:coverage": "echo \"📊  Running Unit Tests and Coverage Report...\" && yarn build:test && yarn nyc mocha dist/test/api/test/test.js"
   },
-  "nyc":{
-    "exclude":["**/*test.*s","**/*mocks.*s"],
-    "reporter":["html","text","mocha"]
+  "nyc": {
+    "exclude": [
+      "**/*test.*s",
+      "**/*mocks.*s"
+    ],
+    "reporter": [
+      "html",
+      "text",
+      "mocha"
+    ]
   },
   "dependencies": {
     "@jyv/core": "^1.0.1",
     "@jyv/mongo": "^1.0.2",
+    "@types/bcrypt": "^3.0.0",
     "@types/jsonwebtoken": "^8.3.0",
     "@types/node": "^8",
     "@types/passport": "^0.4.7",
     "@types/passport-jwt": "^3.0.1",
+    "bcrypt": "^3.0.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
