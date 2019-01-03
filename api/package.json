@@ -23,6 +23,7 @@
       "mocha"
     ]
   },
+  "engines": {"node":"8.11.4"},
   "dependencies": {
     "@jyv/core": "^1.0.1",
     "@jyv/mongo": "^1.0.2",
@@ -53,7 +54,6 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "sinon": "^7.2.2",
-    "ts-node": "^3.0.0",
     "typescript": "2.7.2"
   }
 }
