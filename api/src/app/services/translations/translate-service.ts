@@ -8,15 +8,15 @@ export type TranslationEntry = TranslationMap & {
 };
 export class TranslateService {
     static instance = new TranslateService();
-    constructor () {}
+    constructor () { }
     static translations:{ [key: string]: TranslationEntry } = {};
     static async init(languages:string[]) {
         var loading:Promise<InMemoryFile>[] = [];
         console.info(`🈂️  Loading translations: ${languages}`)
         languages.forEach(lang=>{
             let translationFilename = join(process.cwd(),'translations',`${lang}.json`);
-            loading.push(new File(translationFilename).load()
-                .catch(x=>{throw new Error (`Cannot load translation file: ${translationFilename}`)})
+            loading.push(new File(translationFilename, true).cat()
+                .catch(x=>{throw new Error (`Cannot load translation file: ${translationFilename} (${x})`)})
                 .then(done=>{
                     console.info(`\t${done.path}`);
                     TranslateService.translations[lang]=JSON.parse(done.content);

@@ -15,7 +15,9 @@ export class RouteFactory {
         public routeMap:{
             [key:string]:{
                 [key:string]:(request:any, response:any, next:(any:any)=>any)=>Promise<any>
-            }
+            } & {
+                serialize?:string;
+            };
         },
         public sessionProtection?:Protection
     ) {
@@ -31,7 +33,9 @@ export class RouteFactory {
                         var result;
                         try {
                             result = await routeMap[routePath][method](request, response, next);
-                            response.json(result);
+                            if (result) response[
+                                (routeMap[routePath].serialize as any)||routeMap.serialize||'json'
+                            ](result);
                         } catch (exception) {
                             console.error(exception);
                             console.error(`\t${TS()}`);

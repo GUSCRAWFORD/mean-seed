@@ -26,7 +26,7 @@ describe(`⚙️  User Route config`, function (){
             , true
         );
     })
-    it(`http://localhost:${process.env.PORT}/users returns "unauthorized" (${UNAUTHORIZED}`, async function() {
+    it(`http://localhost:${process.env.PORT}/users returns "unauthorized" (${UNAUTHORIZED})`, async function() {
 
         var result;
         try {
@@ -37,7 +37,7 @@ describe(`⚙️  User Route config`, function (){
         }
         return result;
     });
-    it(`http://localhost:${process.env.PORT}/users/x returns "unauthorized" (${UNAUTHORIZED}`, async function () {
+    it(`http://localhost:${process.env.PORT}/users/x returns "unauthorized" (${UNAUTHORIZED})`, async function () {
         var result;
         try {
             result = await Request.get(`http://localhost:${process.env.PORT}/users/x`);

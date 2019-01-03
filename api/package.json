@@ -6,6 +6,7 @@
     "start": "node ./dist/bin/src/www",
     "clean": "echo \"\n🗑  Cleaning API...\" && rm -Rf dist",
     "build": "echo \"\n🛠  Building API...\" && cd src && tsc --diagnostics",
+    "rebuild": "yarn clean && yarn build",
     "build:test": "echo \"⚙️  Building API Tests...\" && cd test && tsc",
     "mocha":"echo \"☕️  Running Mocha...\" && mocha dist/test/api/test/test.js",
     "test": "echo \"🔬  Running Unit Tests...\" && yarn build:test && yarn mocha",

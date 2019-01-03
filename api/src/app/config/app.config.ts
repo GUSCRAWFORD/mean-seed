@@ -15,6 +15,10 @@ import { UsersService } from '../services/users/users-service';
 TranslateService.init(['en']);
 
 export const config = function (app) {
+  /**
+   * Config services
+   */
+  UsersService.instance
   session(app,{ // Run top-level session configurations
     sessionConfigs:[
       ()=>jwt(app, {  // Configure specific session providers and types

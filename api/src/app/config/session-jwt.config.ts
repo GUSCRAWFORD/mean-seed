@@ -51,6 +51,7 @@ export class JwtSessionConfigOptions extends SessionConfigOptions {
     onAuthenticate?:(success:any,req:any)=>Promise<any>;
     onFailedAuthenticate?:(error:any,req:any)=>Promise<any>;
     onProfile?:(user:any)=>Promise<any>;
+    sign?:(sub:string, payload:any)=>any;
 }
 /**
  * 
@@ -87,11 +88,11 @@ export function config(
     JwtService.intance.session[options.headerName as string] = new JwtProtection({
         /** other paths? */
     }, authenticate);
-    app.post(`/${options.loginPath}`, handleLogin);
-    app.get(`/${options.loginPath}`, authenticate, getProfile);
-    app.get(`/${options.logoutPath}`, authenticate, handleLogout);
-    app.post(`/${options.logoutPath}`, authenticate, handleLogout);
-    app.put(`/${options.logoutPath}`, authenticate, handleLogout);
+    app.post(`${options.loginPath}`, handleLogin);
+    app.get(`${options.loginPath}`, authenticate, getProfile);
+    app.get(`${options.logoutPath}`, authenticate, handleLogout);
+    app.post(`${options.logoutPath}`, authenticate, handleLogout);
+    app.put(`${options.logoutPath}`, authenticate, handleLogout);
     async function authenticate (req:any,res:any,next:any) {
         return PASSPORT.authenticate(
             "jwt",
@@ -157,7 +158,7 @@ export function config(
             ),
             expiryStamp = new Date().valueOf() + maxAgeMs;
             try {
-                var token = sign(user.name, {roles:user.roles});
+                var token = (options.sign?options.sign:sign)(user.username, {roles:user.roles});
                 res.writeHead(OK, {
                     'Set-Cookie':options.headerName+'='+token
                         +`;Expires=${expiryStamp};Max-Age=${maxAgeMs};path=/;httponly;`,
