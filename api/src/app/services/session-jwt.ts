@@ -2,6 +2,8 @@ import { UNAUTHORIZED, OK } from 'http-status-codes';
 import { DEBUG } from './debug';
 import { TS } from './timestamp';
 import * as Jwt from 'jsonwebtoken';
+const LOGIN_NO_CREDS = (req) => `${req.headers.referer||'(no referer)'} tried to login with no credentials...`,
+LOGIN_FAILED = (req) => `❌  👤  Login failed ${req&&req.body?('for '+req.body.username):''}:`;
 export const GET_PROFILE_FACTORY = (options) => async function getProfile(req:any,res:any,next:any) {
     let profile: any = req.user;
     if (options.onProfile)
@@ -11,8 +13,8 @@ export const GET_PROFILE_FACTORY = (options) => async function getProfile(req:an
 }
 export const HANDLE_LOGIN_FACTORY = (options) => async function handleLogin (req:any, res:any, next:any) {
     try {
-        if (DEBUG("jwt")) console.log(req.body);
-        if (!req.body) throw new Error(`${req.headers.referer||'(no referer)'} tried to login with no credentials...`);
+        //if (DEBUG("jwt")) console.log(req.body);
+        if (!req.body) throw new Error(LOGIN_NO_CREDS(req));
         if (DEBUG("jwt")) console.info(`🔑  ${req.body.username} logging in...`);
         let validUser;
         if (options.onLogin) validUser = await options.onLogin(req.body.username, req.body.password);
@@ -21,8 +23,7 @@ export const HANDLE_LOGIN_FACTORY = (options) => async function handleLogin (req
         }
         else SET_JWT_FACTORY(options, res)(validUser);
     } catch (e) {
-        let failure = `❌  👤  Login failed ${req&&req.body?('for '+req.body.username):''}:`;
-        console.error(failure);
+        console.error(LOGIN_FAILED(req));
         console.error(e)
         if(!e.status) e.status = UNAUTHORIZED;
         next(e);
