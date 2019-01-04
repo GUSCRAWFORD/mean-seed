@@ -19,7 +19,7 @@ export const HANDLE_LOGIN_FACTORY = (options) => async function handleLogin (req
         if (!validUser) {
             throw new Error(`Invalid password for user ${req.body.username}`);
         }
-        else setJwt(validUser);
+        else SET_JWT_FACTORY(options, res)(validUser);
     } catch (e) {
         let failure = `❌  👤  Login failed ${req&&req.body?('for '+req.body.username):''}:`;
         console.error(failure);
@@ -28,38 +28,40 @@ export const HANDLE_LOGIN_FACTORY = (options) => async function handleLogin (req
         next(e);
     }
     
-    function setJwt(user:any) {
-        const S = 1000, M = 60 * S, H = 60 * M, maxAgeMs = (
-            parseInt(options.expiryHours as string) * H
-        ) + (
-            parseInt(options.expiryMinutes as string) * M
-        ),
-        expiryStamp = new Date().valueOf() + maxAgeMs;
-        try {
-            var token = (options.sign?options.sign:sign)(user.username, {roles:user.roles});
-            res.writeHead(OK, {
-                'Set-Cookie':options.headerName+'='+token
-                    +`;Expires=${expiryStamp};Max-Age=${maxAgeMs};path=/;httponly;`,
-                'Content-Type':'application/json; charset=utf-8;'
-            });
-            res.write(Buffer.from(JSON.stringify(user)));
-            res.end();
-            if (DEBUG("jwt")) console.info(`☑️  ${JSON.stringify(user)} is logged in...`);
-        }
-        catch (e) {
-            console.error(`❌  👤  Can't write a session for ${JSON.stringify(user)} (${e})`);
-        }
-        function sign(sub:string|any, payload?: object|any) {
-            if (!payload) payload = {};
-            payload.sub = sub.toString();
-            payload.iss = options.host;
-            payload.aud = options.audience;
-            payload.exp = expiryStamp / S;
-            return Jwt.sign(payload,
-                options.secret as any
-            );
-        }
+
+}
+export const SET_JWT_FACTORY = (options, res)=>function setJwt(user:any) {
+    const S = 1000, M = 60 * S, H = 60 * M, maxAgeMs = (
+        parseInt(options.expiryHours as string) * H
+    ) + (
+        parseInt(options.expiryMinutes as string) * M
+    ),
+    expiryStamp = new Date().valueOf() + maxAgeMs;
+    try {
+        var token = (options.sign?options.sign:DEFAULT_JWT_SIGN(options, expiryStamp, S))(user.username, {roles:user.roles});
+        res.writeHead(OK, {
+            'Set-Cookie':options.headerName+'='+token
+                +`;Expires=${expiryStamp};Max-Age=${maxAgeMs};path=/;httponly;`,
+            'Content-Type':'application/json; charset=utf-8;'
+        });
+        res.write(Buffer.from(JSON.stringify(user)));
+        res.end();
+        if (DEBUG("jwt")) console.info(`☑️  ${JSON.stringify(user)} is logged in...`);
     }
+    catch (e) {
+        console.error(`❌  👤  Can't write a session for ${JSON.stringify(user)} (${e})`);
+    }
+
+}
+export const DEFAULT_JWT_SIGN = (options, expiryStamp, S) => function sign(sub:string|any, payload?: object|any) {
+    if (!payload) payload = {};
+    payload.sub = sub.toString();
+    payload.iss = options.host;
+    payload.aud = options.audience;
+    payload.exp = expiryStamp / S;
+    return Jwt.sign(payload,
+        options.secret as any
+    );
 }
 export const HANDLE_LOGOUT_FACTORY = (options) => async function handleLogout(req:any, res:any, next:any) {
     let receipt:any = req.user;

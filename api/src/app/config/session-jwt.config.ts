@@ -82,14 +82,14 @@ export function config(
             }
         )
     );
-
-    JwtService.intance.session[options.headerName as string] = new JwtProtection({
-        /** other paths? */
-    }, AUTHENTICATE_FACTORY(options, PASSPORT));
+    JwtService.intance.session[options.headerName as string] = new JwtProtection({ /** other paths? */ }, AUTHENTICATE_FACTORY(options, PASSPORT));
+    mapRoutes(app, options, PASSPORT);
+    return app;
+}
+function mapRoutes (app:any, options: JwtSessionConfigOptions, PASSPORT: any) {
     app.post(`${options.loginPath}`, HANDLE_LOGIN_FACTORY(options));
     app.get(`${options.loginPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), GET_PROFILE_FACTORY(options));
     app.get(`${options.logoutPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), HANDLE_LOGOUT_FACTORY(options));
     app.post(`${options.logoutPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), HANDLE_LOGOUT_FACTORY(options));
     app.put(`${options.logoutPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), HANDLE_LOGOUT_FACTORY(options));
-    return app;
 }
