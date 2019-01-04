@@ -23,9 +23,9 @@ export class HashesService extends ODataV4MongoDbGenericRepo<HashEntry> {
             bcrypt.hash(data, 10, (err,hash)=>err?error(err):done(hash as string))
         });
     }
-    async compare(hash:string, to:string) {
+    async compare(password:string, hash:string) {
         return new Promise((done, error)=>{
-            bcrypt.compare(to, hash, (err, result)=>err?error(err):done(result as boolean));
+            bcrypt.compare(password, hash, (err, result)=>err?error(err):done(result as boolean));
         })
     }
 }

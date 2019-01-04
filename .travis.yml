@@ -11,6 +11,5 @@ before_script:
   - cd api
 script: yarn install && yarn test:coverage
 after_script:
-  - mv ./coverage ../coverage
   - cd ..
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

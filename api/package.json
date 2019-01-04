@@ -10,9 +10,11 @@
     "build:test": "echo \"⚙️  Building API Tests...\" && cd test && tsc",
     "mocha": "echo \"☕️  Running Mocha...\" && mocha dist/test/api/test/test.js",
     "test": "echo \"🔬  Running Unit Tests...\" && yarn build:test && yarn mocha",
-    "test:coverage": "echo \"📊  Running Unit Tests and Coverage Report...\" && rm -Rf coverage && mkdir coverage && yarn build:test && nyc mocha dist/test/api/test/test.js"
+    "test:coverage": "echo \"📊  Running Unit Tests and Coverage Report...\" && yarn build:test && nyc mocha dist/test/api/test/test.js"
   },
   "nyc": {
+    "silent":false,
+    "report-dir":"../coverage",
     "exclude": [
       "**/*test.*s",
       "**/*mocks.*s"

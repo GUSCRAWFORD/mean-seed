@@ -3,6 +3,7 @@ import { Connections } from '../connections.config';
 import { HashesService, HashEntry } from '../hashes/hashes-service';
 import { CommonQueries } from '../common-queries';
 import { User, SystemUser } from '../../../../../models/src';
+import { hash } from 'bcrypt';
 SystemUser.defaultUsername = process.env.SYSTEM_USER || SystemUser.defaultUsername;
 export class UserSession {
     constructor(
@@ -22,24 +23,24 @@ export class UsersService extends ODataV4MongoDbGenericRepo<User> {
     }
     async validate (username, password) : Promise<boolean> {
         if (UsersService.system && username === SystemUser.defaultUsername) {
-            var systemUser, systemHashedPassword;
+            var systemUser;
             try {
                 systemUser = await UsersService.system;
-                systemHashedPassword = await HashesService.instance.hash(password, UsersService.defaultSecret);
+                //systemHashedPassword = await HashesService.instance.hash(password, UsersService.defaultSecret);
             } catch (e) {
                 console.error(e);
             }
-            if(systemUser.passwordHash === systemHashedPassword) {
-                this.hashes[systemHashedPassword] = username;
+            if(await HashesService.instance.compare(password, systemUser.passwordHash)) {
+                this.hashes[systemUser.passwordHash] = username;
                 return true;
             }
             return false;
         }
         var hashEntry = (await HashesService.instance.query(CommonQueries.userHash(username))).pop();
         if (!hashEntry) return false;
-        var verificationHash = await HashesService.instance.hash(password, UsersService.instance.secret);
-        if (verificationHash === hashEntry.hash) {
-            this.hashes[verificationHash as string] = username;
+        //var verificationHash = await HashesService.instance.hash(password, UsersService.instance.secret);
+        if (await HashesService.instance.compare(password, hashEntry.hash)) {
+            this.hashes[hashEntry.hash] = username;
             return true;
         }
         return false;
