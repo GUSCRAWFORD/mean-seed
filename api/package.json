@@ -21,7 +21,8 @@
       "html",
       "text",
       "mocha",
-      "lcov"
+      "lcov",
+      "text-lcov"
     ]
   },
   "engines": {"node":"8.11.4"},
