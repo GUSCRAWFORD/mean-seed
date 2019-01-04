@@ -20,7 +20,8 @@
     "reporter": [
       "html",
       "text",
-      "mocha"
+      "mocha",
+      "lcov"
     ]
   },
   "engines": {"node":"8.11.4"},
