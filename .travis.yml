@@ -10,4 +10,6 @@ before_script:
   - ./cc-test-reporter before-build
 script: cd api && yarn install && yarn test:coverage
 after_script:
+  - ls ./
+  - echo $TRAVIS_TEST_RESULT
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
