@@ -7,21 +7,7 @@ export function config(app) {
       res.status(err.status || 500);
       switch (req.headers.accept) {
         case 'application/json':
-          var stackArray = err.stack.split(/\n\s*/g);
-          res.json(
-            Object.assign(
-              {
-                status:err.status,
-                message:err.message
-              },
-              verboseStackTrace
-                ? {
-                  message: stackArray[0],
-                  stack: stackArray.slice(1)
-                }
-                :{}
-              )
-            );
+          applicationJson(res, err, verboseStackTrace);
           break;
         default: 
           // set locals, only providing error in development
@@ -31,4 +17,21 @@ export function config(app) {
           res.render('error');
       }
     });
+}
+function applicationJson(res, err, verboseStackTrace){
+  var stackArray = err.stack.split(/\n\s*/g);
+  res.json(
+    Object.assign(
+      {
+        status:err.status,
+        message:err.message
+      },
+      verboseStackTrace
+        ? {
+          message: stackArray[0],
+          stack: stackArray.slice(1)
+        }
+        :{}
+      )
+    );
 }
