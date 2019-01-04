@@ -5,3 +5,4 @@
 .vscode
 **/.nyc_output
 **/coverage
+.coverage
