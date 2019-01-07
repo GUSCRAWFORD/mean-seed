@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "1b86c6cf-c38f-4760-98a1-7bea958e4918",
+		"name": "🍃 Seed",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "👤  Users",
+			"item": [
+				{
+					"name": "👨🏽‍💼  Seed Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"username\":\"admin@app\",\n\t\t\"clearTextPassword\":\"!admin\"\n\t}\n]"
+						},
+						"url": {
+							"raw": "{{api}}/seed/users",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"seed",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

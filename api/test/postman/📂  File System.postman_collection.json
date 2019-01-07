@@ -1,0 +1,53 @@
+{
+	"info": {
+		"_postman_id": "6d31358b-6116-42f3-a478-b41f309b16ba",
+		"name": "📂  File System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/shared",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api}}/fs/shared%2F",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"fs",
+						"shared%2F"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/shared/zips.json",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api}}/fs/shared%2Fzips.json",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"fs",
+						"shared%2Fzips.json"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
