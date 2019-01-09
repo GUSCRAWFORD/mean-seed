@@ -1,5 +1,5 @@
 # Getting Started
-![build](https://travis-ci.com/GUSCRAWFORD/mean-seed.svg?branch=master)
+[![Build Status](https://travis-ci.com/GUSCRAWFORD/mean-seed.svg?branch=master)](https://travis-ci.com/GUSCRAWFORD/mean-seed)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a985b5bc91c864c70d4e/maintainability)](https://codeclimate.com/github/GUSCRAWFORD/mean-seed/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a985b5bc91c864c70d4e/test_coverage)](https://codeclimate.com/github/GUSCRAWFORD/mean-seed/test_coverage)
 
