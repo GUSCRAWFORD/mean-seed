@@ -4,6 +4,7 @@ import { HashesService, HashEntry } from '../hashes/hashes-service';
 import { CommonQueries } from '../common-queries';
 import { User, SystemUser } from '../../../../../models/src';
 import { hash } from 'bcrypt';
+import { ExpressLikeODataQuery } from '@jyv/core';
 SystemUser.defaultUsername = process.env.SYSTEM_USER || SystemUser.defaultUsername;
 export class UserSession {
     constructor(
@@ -20,6 +21,26 @@ export class UsersService extends ODataV4MongoDbGenericRepo<User> {
     constructor(public secret:string='') {
         super('users', Connections.app);
         this.secret = secret || UsersService.defaultSecret;
+    }
+    async seed(users:User[]) {
+        return Promise.all(users.map(seededUser=>UsersService.instance.create(seededUser)));
+    }
+    async create(data:User, context?:any) {
+        UsersService.instance.dontSave(data);
+        return super.create(data, context);
+    }
+    async update(query:ExpressLikeODataQuery, data:User, context?:any) {
+        UsersService.instance.dontSave(data);
+        return super.update(query, data, context);
+    }
+    async upsert(key:string, data:User, context?:any) {
+        UsersService.instance.dontSave(data);
+        console.info(data)
+        return super.upsert(key, data, context)
+    }
+    dontSave(user:User) {
+        delete user.clearTextPassword;
+        delete user.passwordHash;
     }
     async validate (username, password) : Promise<boolean> {
         if (UsersService.system && username === SystemUser.defaultUsername) {

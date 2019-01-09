@@ -11,12 +11,17 @@ export const route = new RouteFactory(
     '/':{
       get: async function(req, res, next) {
         return UsersService.instance.query(req.query);
-      }
+      },
+      delete: async (req)=>
+        UsersService.instance.delete(req.body||{})
     },
     '/:key':{
       get: async function (req, res, next) {
         return UsersService.instance.read(req.params.key, req.query);
       }
+    },
+    '/seed':{
+      post: async (req, res, next)=> req.body instanceof Array?UsersService.instance.seed(req.body):next(`array expected, got: ${req.body}`)
     }
   },
   sessionProtection

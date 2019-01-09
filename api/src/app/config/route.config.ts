@@ -43,7 +43,9 @@ export class RouteFactory {
                         }
                     }
                 );
-                this.router[method].apply(this.router, routerArguments);
+                if (typeof this.router[method] === 'function')
+                    this.router[method].apply(this.router, routerArguments);
+                else console.warn(`⚠️  this.router.${method} doesn't appear to be a route-handler...`)
             });
         });
     }
