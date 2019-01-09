@@ -1,0 +1,12 @@
+# https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+POST http://localhost:3000/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "system",
+    "password": "pass!
+}
+
+###
+
+http://localhost:3000/users/login
