@@ -16,20 +16,25 @@ export const HANDLE_LOGIN_FACTORY = (options) => async function handleLogin (req
         //if (DEBUG("jwt")) console.log(req.body);
         if (!req.body) throw new Error(LOGIN_NO_CREDS(req));
         if (DEBUG("jwt")) console.info(`🔑  ${req.body.username} logging in...`);
-        let validUser;
-        if (options.onLogin) validUser = await options.onLogin(req.body.username, req.body.password);
-        if (!validUser) {
-            throw new Error(`Invalid password for user ${req.body.username}`);
-        }
-        else SET_JWT_FACTORY(options, res)(validUser);
+        let validUser = await VALID_USER(options, req);
+        SET_JWT_FACTORY(options, res)(validUser);
     } catch (e) {
-        console.error(LOGIN_FAILED(req));
-        console.error(e)
-        if(!e.status) e.status = UNAUTHORIZED;
-        next(e);
+        HANDLE_LOGIN_ERROR(e, req, next);
     }
-    
-
+}
+export const VALID_USER = async (options, req)=>{
+    var validUser
+    if (options.onLogin) validUser = await options.onLogin(req.body.username, req.body.password);
+    if (!validUser) {
+        throw new Error(`Invalid password for user ${req.body.username}`);
+    }
+    return validUser;
+}
+export const HANDLE_LOGIN_ERROR = (e, req, next)=> {
+    console.error(LOGIN_FAILED(req));
+    console.error(e)
+    if(!e.status) e.status = UNAUTHORIZED;
+    next(e);
 }
 export const SET_JWT_FACTORY = (options, res)=>function setJwt(user:any) {
     const S = 1000, M = 60 * S, H = 60 * M, maxAgeMs = (

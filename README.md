@@ -7,7 +7,7 @@
 ```
 
 # First time?
-yarn mongodb:reset-users && yarn start
+yarn yarn install && mongodb:reset-users &&  yarn start
 
 ```
 
