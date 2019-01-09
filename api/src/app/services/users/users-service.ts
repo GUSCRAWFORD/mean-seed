@@ -22,20 +22,7 @@ export class UsersService extends ODataV4MongoDbGenericRepo<User> {
         this.secret = secret || UsersService.defaultSecret;
     }
     async validate (username, password) : Promise<boolean> {
-        if (UsersService.system && username === SystemUser.defaultUsername) {
-            var systemUser;
-            try {
-                systemUser = await UsersService.system;
-                //systemHashedPassword = await HashesService.instance.hash(password, UsersService.defaultSecret);
-            } catch (e) {
-                console.error(e);
-            }
-            if(await HashesService.instance.compare(password, systemUser.passwordHash)) {
-                this.hashes[systemUser.passwordHash] = username;
-                return true;
-            }
-            return false;
-        }
+        if (UsersService.system && username === SystemUser.defaultUsername) return this.systemValidate(username, password);
         var hashEntry = (await HashesService.instance.query(CommonQueries.userHash(username))).pop();
         if (!hashEntry) return false;
         //var verificationHash = await HashesService.instance.hash(password, UsersService.instance.secret);
@@ -69,6 +56,20 @@ export class UsersService extends ODataV4MongoDbGenericRepo<User> {
         if (sessionProfile)
             delete this.sessions[username];
         return sessionProfile.user;
+    }
+    private async systemValidate(username, password) {
+        var systemUser;
+        try {
+            systemUser = await UsersService.system;
+            //systemHashedPassword = await HashesService.instance.hash(password, UsersService.defaultSecret);
+        } catch (e) {
+            console.error(e);
+        }
+        if(await HashesService.instance.compare(password, systemUser.passwordHash)) {
+            this.hashes[systemUser.passwordHash] = username;
+            return true;
+        }
+        return false;
     }
     static system = process.env.SYSTEM_PASSWORD
         ? new Promise<SystemUser>(

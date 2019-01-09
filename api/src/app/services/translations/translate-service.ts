@@ -15,7 +15,7 @@ export class TranslateService {
         console.info(`🈂️  Loading translations: ${languages}`)
         languages.forEach(lang=>{
             let translationFilename = join(process.cwd(),'translations',`${lang}.json`);
-            loading.push(new File(translationFilename, true).cat()
+            loading.push(new File(translationFilename).cat()
                 .catch(x=>{throw new Error (`Cannot load translation file: ${translationFilename} (${x})`)})
                 .then(done=>{
                     console.info(`\t${done.path}`);
@@ -46,13 +46,7 @@ export class TranslateService {
 function pluralizeFactory(lang) {
     const pluralize = {
         en:(count:any, str:string)=>
-            !!(count-1)
-            ?str.endsWith('s')
-                ?str+'es'
-                :str.endsWith('y')
-                    ?str.slice(0, str.length-2)+'ies'
-                    :str+'s'
-            :str
+            !!(count-1) ?str.endsWith('s') ?str+'es' :str.endsWith('y') ?str.slice(0, str.length-2)+'ies' :str+'s' :str
     }
     return pluralize[lang];
 }
