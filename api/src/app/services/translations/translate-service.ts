@@ -43,10 +43,13 @@ export class TranslateService {
         return language[key] = map;
     }
 }
-function pluralizeFactory(lang) {
+function pluralizeFactory(lang:string) {
     const pluralize = {
         en:(count:any, str:string)=>
-            !!(count-1) ?str.endsWith('s') ?str+'es' :str.endsWith('y') ?str.slice(0, str.length-2)+'ies' :str+'s' :str
+            !!(count-1) ? pluralizeEn(str):str
     }
     return pluralize[lang];
+}
+function pluralizeEn(str:string) {
+    return str.endsWith('s') ?str+'es' :str.endsWith('y') ?str.slice(0, str.length-2)+'ies' :str+'s'
 }

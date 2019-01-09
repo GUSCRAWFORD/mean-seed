@@ -16,12 +16,7 @@ export const route = new RouteFactory(
           result = await file.ls();
           if(result) return result;
         } catch(e) {
-          try {
-            res.type('application/json');
-            file.pipe(res);
-          } catch(e) {
-
-          }
+          pipeResult(res, file);
         }
         return null;
       }
@@ -30,3 +25,11 @@ export const route = new RouteFactory(
   sessionProtection
 );
 export { RouteFactory };
+function pipeResult(res, file) {
+  try {
+    res.type('application/json');
+    file.pipe(res);
+  } catch(e) {
+    console.error(e);
+  }
+}

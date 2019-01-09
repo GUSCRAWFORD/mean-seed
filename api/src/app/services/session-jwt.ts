@@ -16,8 +16,7 @@ export const HANDLE_LOGIN_FACTORY = (options) => async function handleLogin (req
         //if (DEBUG("jwt")) console.log(req.body);
         if (!req.body) throw new Error(LOGIN_NO_CREDS(req));
         if (DEBUG("jwt")) console.info(`🔑  ${req.body.username} logging in...`);
-        let validUser = await VALID_USER(options, req);
-        SET_JWT_FACTORY(options, res)(validUser);
+        SET_JWT_FACTORY(options, res)(await VALID_USER(options, req));
     } catch (e) {
         HANDLE_LOGIN_ERROR(e, req, next);
     }
@@ -45,19 +44,22 @@ export const SET_JWT_FACTORY = (options, res)=>function setJwt(user:any) {
     expiryStamp = new Date().valueOf() + maxAgeMs;
     try {
         var token = (options.sign?options.sign:DEFAULT_JWT_SIGN(options, expiryStamp, S))(user.username, {roles:user.roles});
-        res.writeHead(OK, {
-            'Set-Cookie':options.headerName+'='+token
-                +`;Expires=${expiryStamp};Max-Age=${maxAgeMs};path=/;httponly;`,
-            'Content-Type':'application/json; charset=utf-8;'
-        });
-        res.write(Buffer.from(JSON.stringify(user)));
-        res.end();
+        setJwtCookie(res, options, token, expiryStamp, maxAgeMs, user);
         if (DEBUG("jwt")) console.info(`☑️  ${JSON.stringify(user)} is logged in...`);
     }
     catch (e) {
         console.error(`❌  👤  Can't write a session for ${JSON.stringify(user)} (${e})`);
     }
 
+}
+export function setJwtCookie(res:any, options:any, token:string, expiryStamp:number, maxAgeMs:number, data:any) {
+    res.writeHead(OK, {
+        'Set-Cookie':options.headerName+'='+token
+            +`;Expires=${expiryStamp};Max-Age=${maxAgeMs};path=/;httponly;`,
+        'Content-Type':'application/json; charset=utf-8;'
+    });
+    res.write(Buffer.from(JSON.stringify(data)));
+    res.end();
 }
 export const DEFAULT_JWT_SIGN = (options, expiryStamp, S) => function sign(sub:string|any, payload?: object|any) {
     if (!payload) payload = {};
@@ -75,12 +77,7 @@ export const HANDLE_LOGOUT_FACTORY = (options) => async function handleLogout(re
     try {
         if (options.onLogout)
             receipt = await options.onLogout(req.user.sub);
-        res.writeHead(OK, {
-            'Content-type':'application/json; charset=utf-8;',
-            'Set-Cookie':options.headerName+'=;Expires='+new Date(0)+';Max-Age=0;path=/;httponly'
-        });
-        res.write(Buffer.from(JSON.stringify(receipt)))
-        res.end();
+        setJwtCookie(res, options, '', 0, 0, receipt);
     }
     catch (e) {
         console.log(e);
