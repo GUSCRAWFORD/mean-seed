@@ -1,12 +1,20 @@
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+# 🔑 Login
 POST http://localhost:3000/users/login HTTP/1.1
 content-type: application/json
 
 {
     "username": "system",
-    "password": "pass!
+    "password": "pass!"
 }
 
 ###
 
+# 👤  Check Profile
 http://localhost:3000/users/login
+
+###
+
+# 💾  Get a BIG File
+http://localhost:3000/fs/shared%2Fzips.json
