@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  seedApi:'api/1',
+  otherApi:'api/2'
 };
 
 /*

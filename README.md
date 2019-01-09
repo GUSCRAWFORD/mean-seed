@@ -3,6 +3,14 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/a985b5bc91c864c70d4e/maintainability)](https://codeclimate.com/github/GUSCRAWFORD/mean-seed/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a985b5bc91c864c70d4e/test_coverage)](https://codeclimate.com/github/GUSCRAWFORD/mean-seed/test_coverage)
 
+## Quick Ref
+```
+
+# First time?
+yarn mongodb:reset-users && yarn start
+
+```
+
 ## What is MEAN Seed?
 
 "MEAN" seed is starter application with some elementary pre-fabricated components and configurations:

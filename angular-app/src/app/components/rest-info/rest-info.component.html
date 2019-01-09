@@ -1,0 +1,15 @@
+<h2>ℹ️  {{method | uppercase}}
+  <a [hidden]="method!=='get'" [href]="endpoint" target="_new">{{endpoint||"none"}}</a>
+  <span [hidden]="method==='get'">{{endpoint||"none"}}</span>
+</h2>
+<h3 [hidden]="result">⚠️ Awaiting...</h3>
+<h3 [hidden]="!(result && !result.status)">
+  ✅ Complete
+</h3>
+<h3 [hidden]="!(result && result.status)">
+  ❌ Errored
+</h3>
+<pre>{{result|stringify:' '}}</pre>
+<ng-container *ngIf="result && !result.status">
+  <ng-content></ng-content>
+</ng-container>

@@ -18,3 +18,90 @@ http://localhost:3000/users/login
 
 # 💾  Get a BIG File
 http://localhost:3000/fs/shared%2Fzips.json
+
+###
+
+# 👥  Seed Users
+DELETE http://localhost:3000/users/
+
+###
+
+POST http://localhost:3000/users/seed HTTP/1.1
+content-type: application/json
+
+[
+    {
+        "username": "user-1",
+        "roles": [
+            { "name":"user", "id":1 }
+        ],
+        "clearTextPassword":"pass!"
+    },
+    {
+        "username": "user-2",
+        "roles": [
+            { "name":"user", "id":1 }
+        ],
+        "clearTextPassword":"pass!"
+    },
+    {
+        "username": "user-3",
+        "roles": [
+            { "name":"user", "id":1 }
+        ],
+        "clearTextPassword":"pass!"
+    },
+    {
+        "username": "user-4",
+        "roles": [
+            { "name":"user", "id":1 }
+        ],
+        "clearTextPassword":"pass!"
+    },
+    {
+        "username": "user-5",
+        "roles": [
+            { "name":"user", "id":1 }
+        ],
+        "clearTextPassword":"pass!"
+    },
+    {
+        "username": "user-6",
+        "roles": [
+            { "name":"user", "id":1 }
+        ],
+        "clearTextPassword":"pass!"
+    },
+    {
+        "username": "user-7",
+        "roles": [
+            { "name":"user", "id":1 }
+        ],
+        "clearTextPassword":"pass!"
+    },
+    {
+        "username": "user-8",
+        "roles": [
+            { "name":"user", "id":1 }
+        ],
+        "clearTextPassword":"pass!"
+    },
+    {
+        "username": "user-9",
+        "roles": [
+            { "name":"user", "id":1 }
+        ],
+        "clearTextPassword":"pass!"
+    },
+    {
+        "username": "user-10",
+        "roles": [
+            { "name":"user", "id":1 }
+        ],
+        "clearTextPassword":"pass!"
+    }
+]
+
+###
+
+http://localhost:3000/users
