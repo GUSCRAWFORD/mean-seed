@@ -1,7 +1,7 @@
 import { ODataV4MongoDbGenericRepo } from '@jyv/mongo';
-import { Connections } from '../connections.config';
+import { Connections } from '../services/connections.config';
 import { HashesService, HashEntry } from '../hashes/hashes-service';
-import { CommonQueries } from '../common-queries';
+import { CommonQueries } from '../services/common-queries';
 import { User, SystemUser } from '../../../../../models/src';
 import { hash } from 'bcrypt';
 import { ExpressLikeODataQuery } from '@jyv/core';

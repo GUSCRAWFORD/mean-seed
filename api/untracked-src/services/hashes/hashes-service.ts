@@ -1,5 +1,5 @@
 import { ODataV4MongoDbGenericRepo } from '@jyv/mongo';
-import { Connections } from '../connections.config';
+import { Connections } from '../services/connections.config';
 import * as bcrypt from 'bcrypt';
 export class HashEntry {
     key:string = '';

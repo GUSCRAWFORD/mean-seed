@@ -11,7 +11,7 @@ RouteFactory.expressInstance = MockExpress.instance;
 process.env.DEFAULT_SESSION_HEADER='x';
 import { config as session } from '../../../src/app/config/session-jwt.config';
 session(MockApp.instance,{});
-import { route as usersRoute } from '../../../src/app/routes/users';
+import { route as usersRoute } from '../../../untracked-src/routes/users';
 //const USERS_ROUTE = 'users';
 describe(`⚙️  User Route config`, function (){
     //console.info(routes);

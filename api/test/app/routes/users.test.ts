@@ -5,7 +5,7 @@ import { MockApp } from '../../mocks';
 import { spy } from 'sinon';
 import { config as session } from '../../../src/app/config/session-jwt.config';
 session(MockApp.instance,{})
-import { route } from '../../../src/app/routes/users';
+import { route } from '../../../untracked-src/routes/users';
 import { UsersService } from '../../../src/app/services/users/users-service';
 const USERS_ROUTE = 'users', EXPECTED_QUERY = {}, EXPECTED_KEY = 'x';
 describe(`👤  /${USERS_ROUTE}`, ()=>{

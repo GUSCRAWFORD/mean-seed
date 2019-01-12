@@ -1,6 +1,6 @@
-import { RouteFactory } from '../config/route.config';
+import { RouteFactory } from '../../src/app/config/route.config';
 import { File } from '../services/files/files-service';
-import { JwtService, DEFAULT_SESSION_HEADER } from '../config/session-jwt.config';
+import { JwtService, DEFAULT_SESSION_HEADER } from '../../src/app/config/session-jwt.config';
 const sessionProtection = JwtService.intance.session[DEFAULT_SESSION_HEADER];
 sessionProtection.protect(
   `^/fs.*`
