@@ -4,10 +4,13 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a985b5bc91c864c70d4e/test_coverage)](https://codeclimate.com/github/GUSCRAWFORD/mean-seed/test_coverage)
 
 ## Quick Ref
+
 ```
 
 # First time?
-yarn yarn install && mongodb:reset-users &&  yarn start
+yarn install
+yarn mongodb:reset-users
+yarn start
 
 ```
 
@@ -16,15 +19,21 @@ yarn yarn install && mongodb:reset-users &&  yarn start
 "MEAN" seed is starter application with some elementary pre-fabricated components and configurations:
 
 1. A well-delegated express application
-2. A schema for statically declaring "route-maps" and managing security
-3. A **user** management service
-   1. JWT Session Management
-4. A **file** management service
+2. A starter pm2 environment
+3. A light node module managing a sandbox database instance
+   1. Cross-platform shorthands and starter scripts
+   2. Reset database, take/load snapshot, etc.
+4. A schema for statically declaring "route-maps" and managing security
+5. A **user** management service
+   1. JWT Session Management via Cookies
+6. A **file** management service
+7. A **translations** manager
 
 ## Why is it Useful?
 
-1. The pre-fab components will broadly configure and use middleware as per common recipes
+1. The pre-fab components configure and use middleware as per common recipes while naturally delegating the separation of concerns for you developing enterprise grade software in express
 2. Start with more out-of-the-box
+   1. C
 
 
 ## Envionrment Pre-requisites
