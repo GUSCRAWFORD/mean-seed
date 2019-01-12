@@ -5,8 +5,8 @@
   "types": "lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "clean": "echo \"🗑  Cleaning Models...\" & rimaf dist",
-    "build": "echo \"🛠  Building Models...\" & cd src & tsc --diagnostics",
+    "clean": "echo \"🗑  Cleaning Models...\" && rimaf dist",
+    "build": "echo \"🛠  Building Models...\" && cd src && tsc --diagnostics",
     "rebuild": "yarn clean & yarn build"
   },
   "devDependencies": {
