@@ -18,12 +18,12 @@ module.exports = {
     // },
     {
       script:'mongod',
-      cwd:'mongodb',
+      cwd:'./mongodb/',
       args:'--port 27017 -f config/mongod.conf'
     }
     ,{
-      script:'tsc',
-      cwd:'./api/src',
+      script:'./api/node_modules/typescript/lib/tsc.js',
+      cwd:'./api/src/',
       args:'--watch'
     }
     ,{
