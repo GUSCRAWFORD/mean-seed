@@ -156,6 +156,12 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/http@^7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@angular/http/-/http-7.2.0.tgz#aa3a81214f9b3526caaf591b897f105be32720ec"
+  dependencies:
+    tslib "^1.9.0"
+
 "@angular/language-service@~7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-7.2.0.tgz#9602847c03d269234b33a4ddadaa919f2d558227"
@@ -171,6 +177,14 @@
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-7.2.0.tgz#f2fd73c10e2133996ac575dc6f715e2e410c9fba"
   dependencies:
     tslib "^1.9.0"
+
+"@angular/platform-server@^7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@angular/platform-server/-/platform-server-7.2.0.tgz#16096cf56abcf1e76222cadd4fbb1d8a19f69384"
+  dependencies:
+    domino "^2.1.0"
+    tslib "^1.9.0"
+    xhr2 "^0.1.4"
 
 "@angular/router@~7.2.0":
   version "7.2.0"
@@ -265,6 +279,10 @@
     rxjs "6.3.3"
     tree-kill "1.2.0"
     webpack-sources "1.2.0"
+
+"@nguniversal/module-map-ngfactory-loader@^7.0.2":
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/@nguniversal/module-map-ngfactory-loader/-/module-map-ngfactory-loader-7.0.2.tgz#2df0532f84d4f4e042adb294e3685fad28ed0622"
 
 "@schematics/angular@7.2.1":
   version "7.2.1"
@@ -1858,6 +1876,10 @@ domain-browser@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
 
+domino@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/domino/-/domino-2.1.1.tgz#cd5c639940db72bb7cde1cdb5beea466a4113136"
+
 duplexify@^3.4.2, duplexify@^3.6.0:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/duplexify/-/duplexify-3.6.1.tgz#b1a7a29c4abfd639585efaecce80d666b1e34125"
@@ -1951,7 +1973,7 @@ engine.io@~3.2.0:
     engine.io-parser "~2.1.0"
     ws "~3.3.1"
 
-enhanced-resolve@4.1.0, enhanced-resolve@^4.1.0:
+enhanced-resolve@4.1.0, enhanced-resolve@^4.0.0, enhanced-resolve@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-4.1.0.tgz#41c7e0bfdfe74ac1ffe1e57ad6a5c6c9f3742a7f"
   dependencies:
@@ -5284,7 +5306,7 @@ semver-intersect@1.4.0:
   dependencies:
     semver "^5.0.0"
 
-"semver@2 || 3 || 4 || 5", semver@^5.0.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.6.0:
+"semver@2 || 3 || 4 || 5", semver@^5.0.0, semver@^5.0.1, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.6.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
 
@@ -6025,6 +6047,16 @@ trim-right@^1.0.1:
   dependencies:
     glob "^7.1.2"
 
+ts-loader@^5.3.3:
+  version "5.3.3"
+  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-5.3.3.tgz#8b4af042e773132d86b3c99ef0acf3b4d325f473"
+  dependencies:
+    chalk "^2.3.0"
+    enhanced-resolve "^4.0.0"
+    loader-utils "^1.0.2"
+    micromatch "^3.1.4"
+    semver "^5.0.1"
+
 ts-node@~7.0.0:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-7.0.1.tgz#9562dc2d1e6d248d24bc55f773e3f614337d9baf"
@@ -6478,6 +6510,10 @@ ws@~3.3.1:
     async-limiter "~1.0.0"
     safe-buffer "~5.1.0"
     ultron "~1.1.0"
+
+xhr2@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/xhr2/-/xhr2-0.1.4.tgz#7f87658847716db5026323812f818cadab387a5f"
 
 xml2js@^0.4.17:
   version "0.4.19"
