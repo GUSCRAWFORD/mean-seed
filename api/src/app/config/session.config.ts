@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 
 export const DEFAULT_SESSION_SECRET = process.env.SESSION_SECRET || 'hardcoded-secret';
 export const DEFAULT_SESSION_HEADER = process.env.SESSION_HEADER || 'x-token';
@@ -19,7 +20,7 @@ export class Protection {
     }
     protects(path:string) {
         var protectionKey = Object.keys(this.paths).find(possibleMatch=>!!path.match(new RegExp(possibleMatch)));
-        return protectionKey?this.paths[protectionKey]:(q,s,x)=>x(q,s,null);
+        return protectionKey?this.paths[protectionKey]:(q:Request,s:Response,x:(q:Request,s:Response,err?:any)=>any)=>x(q,s,null);
     }
 }
 /**

@@ -16,11 +16,11 @@ module.exports = {
     //     NODE_ENV: 'production'
     //   }
     // },
-    {
-      script:'mongod',
-      cwd:'./mongodb/',
-      args:'--port 27017 -f config/mongod.conf'
-    }
+    // {
+    //   script:'mongod',
+    //   cwd:'./mongodb/',
+    //   args:'--port 27017 -f config/mongod.conf'
+    // }
     ,{
       script:'./api/node_modules/typescript/lib/tsc.js',
       cwd:'./api/src/',

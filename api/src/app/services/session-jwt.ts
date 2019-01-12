@@ -2,16 +2,19 @@ import { UNAUTHORIZED, OK } from 'http-status-codes';
 import { DEBUG } from './debug';
 import { TS } from './timestamp';
 import * as Jwt from 'jsonwebtoken';
-const LOGIN_NO_CREDS = (req) => `${req.headers.referer||'(no referer)'} tried to login with no credentials...`,
-LOGIN_FAILED = (req) => `❌  👤  Login failed ${req&&req.body?('for '+req.body.username):''}:`;
-export const GET_PROFILE_FACTORY = (options) => async function getProfile(req:any,res:any,next:any) {
+import { Request, Response, Handler } from 'express';
+import { JwtSessionConfigOptions } from '../config/session-jwt.config';
+import { Authenticator } from 'passport';
+const LOGIN_NO_CREDS = (req:Request) => `${req.headers.referer||'(no referer)'} tried to login with no credentials...`,
+LOGIN_FAILED = (req:Request) => `❌  👤  Login failed ${req&&req.body?('for '+req.body.username):''}:`;
+export const GET_PROFILE_FACTORY = (options:JwtSessionConfigOptions) => async function getProfile(req:any,res:any,next:any) {
     let profile: any = req.user;
     if (options.onProfile)
         profile = await options.onProfile(req.user.sub);
     res.json(profile);
     return req.user;
 }
-export const HANDLE_LOGIN_FACTORY = (options) => async function handleLogin (req:any, res:any, next:any) {
+export const HANDLE_LOGIN_FACTORY = (options:JwtSessionConfigOptions) => async function handleLogin (req:any, res:any, next:any) {
     try {
         //if (DEBUG("jwt")) console.log(req.body);
         if (!req.body) throw new Error(LOGIN_NO_CREDS(req));
@@ -21,7 +24,7 @@ export const HANDLE_LOGIN_FACTORY = (options) => async function handleLogin (req
         HANDLE_LOGIN_ERROR(e, req, next);
     }
 }
-export const VALID_USER = async (options, req)=>{
+export const VALID_USER = async (options:JwtSessionConfigOptions, req:Request)=>{
     var validUser
     if (options.onLogin) validUser = await options.onLogin(req.body.username, req.body.password);
     if (!validUser) {
@@ -29,13 +32,13 @@ export const VALID_USER = async (options, req)=>{
     }
     return validUser;
 }
-export const HANDLE_LOGIN_ERROR = (e, req, next)=> {
+export const HANDLE_LOGIN_ERROR = (e:any, req:Request, next:(args?:any)=>any)=> {
     console.error(LOGIN_FAILED(req));
     console.error(e)
     if(!e.status) e.status = UNAUTHORIZED;
     next(e);
 }
-export const SET_JWT_FACTORY = (options, res)=>function setJwt(user:any) {
+export const SET_JWT_FACTORY = (options:JwtSessionConfigOptions, res:Response)=>function setJwt(user:any) {
     const S = 1000, M = 60 * S, H = 60 * M, maxAgeMs = (
         parseInt(options.expiryHours as string) * H
     ) + (
@@ -61,7 +64,7 @@ export function setJwtCookie(res:any, options:any, token:string, expiryStamp:num
     res.write(Buffer.from(JSON.stringify(data)));
     res.end();
 }
-export const DEFAULT_JWT_SIGN = (options, expiryStamp, S) => function sign(sub:string|any, payload?: object|any) {
+export const DEFAULT_JWT_SIGN = (options:JwtSessionConfigOptions, expiryStamp:number, S:number) => function sign(sub:string|any, payload?: object|any) {
     if (!payload) payload = {};
     payload.sub = sub.toString();
     payload.iss = options.host;
@@ -71,7 +74,7 @@ export const DEFAULT_JWT_SIGN = (options, expiryStamp, S) => function sign(sub:s
         options.secret as any
     );
 }
-export const HANDLE_LOGOUT_FACTORY = (options) => async function handleLogout(req:any, res:any, next:any) {
+export const HANDLE_LOGOUT_FACTORY = (options:JwtSessionConfigOptions) => async function handleLogout(req:any, res:any, next:any) {
     let receipt:any = req.user;
     if (DEBUG("jwt")) console.info(`👤  🚪  ${req.user.sub} logged out...`);
     try {
@@ -85,7 +88,7 @@ export const HANDLE_LOGOUT_FACTORY = (options) => async function handleLogout(re
     return req.user;
 }
 
-export const AUTHENTICATE_FACTORY = (options, PASSPORT) => async function authenticate (req:any,res:any,next:any) {
+export const AUTHENTICATE_FACTORY = (options:JwtSessionConfigOptions, PASSPORT:Authenticator<Handler, any, any>) => async function authenticate (req:any,res:any,next:any) {
     return PASSPORT.authenticate(
         "jwt",
         { session: false, failWithError: req.app.get('env') === 'development' },
