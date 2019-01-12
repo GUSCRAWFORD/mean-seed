@@ -40,7 +40,7 @@ export class RouteFactory {
     }
     private handle(routerArguments:any[], routePath:string, method:string) {
         routerArguments.push(
-            this.routeMap[routePath][method][`$handle_${method}_${this.path}${routePath}`] = async (request:any, response:any, next:any)=>{
+            (this.routeMap[routePath][method] as any)[`$handle_${method}_${this.path}${routePath}`] = async (request:any, response:any, next:any)=>{
                 var result;
                 try {
                     result = await this.routeMap[routePath][method](request, response, next);

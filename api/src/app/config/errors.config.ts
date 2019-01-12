@@ -1,7 +1,9 @@
-export function config(app) {
-    app.use(function(err, req, res, next) {
+import { Application, Request, Response } from "express";
+
+export function config(app:Application) {
+    app.use(function(err:any, req:Request, res:Response, next:(args?:any)=>any) {
       const verboseStackTrace = req.app.get('env') === 'development';
-      if (req.headersSent) return next(err);
+      if ((req as any).headersSent) return next(err);
 
       // render the error page
       res.status(err.status || 500);
@@ -18,7 +20,7 @@ export function config(app) {
       }
     });
 }
-function applicationJson(res, err, verboseStackTrace){
+function applicationJson(res:Response, err:any, verboseStackTrace:boolean){
   var stackArray = err.stack.split(/\n\s*/g);
   res.json(
     Object.assign(

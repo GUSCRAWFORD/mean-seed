@@ -16,20 +16,20 @@ module.exports = {
     //     NODE_ENV: 'production'
     //   }
     // },
+    // {
+    //   script:'mongod',
+    //   cwd:'./mongodb/',
+    //   args:'--port 27017 -f config/mongod.conf'
+    // }
     {
-      script:'mongod',
-      cwd:'mongodb',
-      args:'--port 27017 -f config/mongod.conf'
-    }
-    ,{
-      script:'tsc',
-      cwd:'./api/src',
+      script:'../node_modules/typescript/lib/tsc.js',
+      cwd:'./api/src/',
       args:'--watch'
     }
     ,{
       name:'api',
-      cwd:'api',
-      script:'./dist/bin/api/src/www.js',
+      cwd:'./api/',
+      script:'./dist/bin/www.js',
       watch:'./dist/bin',
       env: require('./local-env')
     }

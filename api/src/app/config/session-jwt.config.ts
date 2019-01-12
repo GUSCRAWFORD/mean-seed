@@ -2,8 +2,9 @@
 import { DEBUG } from '../services/debug';
 import { SessionConfigOptions, Protection } from './session.config';
 import { GET_PROFILE_FACTORY, HANDLE_LOGIN_FACTORY, HANDLE_LOGOUT_FACTORY, AUTHENTICATE_FACTORY } from '../services/session-jwt';
-import { Passport } from 'passport';
+import { Passport, Authenticator } from 'passport';
 import { Strategy as JwtStrategy } from 'passport-jwt';
+import { Handler } from 'express';
 export * from './session.config';
 // JWT Strategy
 abstract class ExtractJwt {
@@ -82,7 +83,7 @@ export function config(
             }
         )
     );
-    JwtService.intance.session[options.headerName as string] = new JwtProtection({ /** other paths? */ }, AUTHENTICATE_FACTORY(options, PASSPORT));
+    JwtService.intance.session[options.headerName as string] = new JwtProtection({ /** other paths? */ }, AUTHENTICATE_FACTORY(options, PASSPORT as any));
     mapRoutes(app, options, PASSPORT);
     return app;
 }
