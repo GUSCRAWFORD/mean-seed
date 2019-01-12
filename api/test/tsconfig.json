@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../dist/test",
     "baseUrl":"../../",
-    "rootDirs":["./","../../models/src"],
+    "rootDirs":["./"],
 
     "sourceMap": true,
     

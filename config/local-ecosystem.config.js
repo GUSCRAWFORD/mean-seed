@@ -18,7 +18,7 @@ module.exports = {
     // },
     {
       script:'mongod',
-      cwd:'mongodb',
+      cwd:'./mongodb',
       args:'--port 27017 -f config/mongod.conf'
     }
     ,{
@@ -29,7 +29,7 @@ module.exports = {
     ,{
       name:'api',
       cwd:'api',
-      script:'./dist/bin/api/src/www.js',
+      script:'./dist/bin/www.js',
       watch:'./dist/bin',
       env: require('./local-env')
     }

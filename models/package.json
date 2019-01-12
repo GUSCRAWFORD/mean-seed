@@ -1,12 +1,16 @@
 {
-  "name": "models",
+  "name": "@private/models",
   "version": "0.0.1",
   "main": "bin/index.js",
   "types":"lib/index.d.ts",
   "license": "MIT",
   "scripts":{
-    "clean": "echo \"\n🗑  Cleaning Models...\" && rm -Rf dist",
+    "postinstall":"yarn rebuild",
+    "clean": "echo \"\n🗑  Cleaning Models...\" && rimraf dist",
     "build": "echo \"\n🛠  Building Models...\" && cd src && tsc --diagnostics",
     "rebuild": "yarn clean && yarn build"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.3"
   }
 }

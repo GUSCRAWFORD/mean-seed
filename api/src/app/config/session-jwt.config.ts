@@ -39,7 +39,7 @@ export class JwtProtection extends Protection {
     }
 }
 export class JwtSessionConfigOptions extends SessionConfigOptions {
-    algorithms?:string[] = process.env.SESSION_JWT_ALGORITHMS && process.env.SESSION_JWT_ALGORITHMS.split(',')||['HS256']
+    algorithms?:string[] = process.env.SESSION_JWT_ALGORITHMS && (process.env.SESSION_JWT_ALGORITHMS as any).split(',')||['HS256']
     audience?:string = process.env.SESSION_JWT_AUDIENCE || this.host;
     issuer?:string = process.env.SESSION_JWT_ISSUER || this.host;
     loginPath?:string = process.env.SESSION_JWT_LOGIN_PATH||'/users/login';

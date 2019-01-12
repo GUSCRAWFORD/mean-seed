@@ -2,6 +2,7 @@ import { UNAUTHORIZED, OK } from 'http-status-codes';
 import { DEBUG } from './debug';
 import { TS } from './timestamp';
 import * as Jwt from 'jsonwebtoken';
+import { JwtSessionConfigOptions } from '../config/session-jwt.config';
 const LOGIN_NO_CREDS = (req) => `${req.headers.referer||'(no referer)'} tried to login with no credentials...`,
 LOGIN_FAILED = (req) => `❌  👤  Login failed ${req&&req.body?('for '+req.body.username):''}:`;
 export const GET_PROFILE_FACTORY = (options) => async function getProfile(req:any,res:any,next:any) {
@@ -35,7 +36,7 @@ export const HANDLE_LOGIN_ERROR = (e, req, next)=> {
     if(!e.status) e.status = UNAUTHORIZED;
     next(e);
 }
-export const SET_JWT_FACTORY = (options, res)=>function setJwt(user:any) {
+export const SET_JWT_FACTORY = (options:JwtSessionConfigOptions, res:any)=>function setJwt(user:any) {
     const S = 1000, M = 60 * S, H = 60 * M, maxAgeMs = (
         parseInt(options.expiryHours as string) * H
     ) + (
