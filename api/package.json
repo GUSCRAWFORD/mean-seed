@@ -7,10 +7,10 @@
     "clean": "echo \"🗑  Cleaning API...\" && rimraf dist",
     "build": "echo \"🛠  Building API...\" && cd src && tsc --diagnostics",
     "rebuild": "yarn clean && yarn build",
-    "build:test": "echo \"⚙️  Building API Tests...\" && cd test && tsc",
+    "build:test": "echo \"⚙️  Building API Tests...\" && rimraf dist/test && cd test && tsc",
     "mocha": "echo \"☕️  Running Mocha...\" && mocha dist/test/api/test/test.js",
     "test": "echo \"🔬  Running Unit Tests...\" && yarn build:test && yarn mocha",
-    "test:coverage": "echo \"📊  Running Unit Tests and Coverage Report...\" && yarn build:test && nyc mocha dist/test/api/test/test.js 1> .coverage"
+    "test:coverage": "echo \"📊  Running Unit Tests and Coverage Report...\" && yarn build:test && nyc mocha dist/test/test/test.js 1> .coverage"
   },
   "nyc": {
     "silent": false,
