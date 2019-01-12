@@ -2,6 +2,7 @@
 /**
  * Tie your middleware together in this root process start configuration:
  */
+import { config as ngUniversal } from './angular-universal.config';
 import { config as routes} from './route.config';     // Configure and map all control-routes
 import { config as errors } from './errors.config';   // Configure errors for other client Accept headers
 import { config as session} from './session.config';  // Configure session fundamentals

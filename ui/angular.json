@@ -72,7 +72,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/my-project-server",
+            "outputPath": "dist/ui-server",
             "main": "src/main.server.ts",
             "tsConfig": "src/tsconfig.server.json"
           }

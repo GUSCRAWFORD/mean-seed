@@ -1,5 +1,5 @@
 {
-  "name": "ui",
+  "name": "@guscrawford.com/ui",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,10 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:ssr": "ng run ui:server --output-hashing=none && yarn webpack:server",
+    "ssr:link": "yarn build --prod && yarn build:ssr && cp -R dist/* ../api/dist",
+    "webpack:server": "webpack --config webpack.server.config.js --progress --colors"
   },
   "private": true,
   "dependencies": {
@@ -47,6 +50,7 @@
     "ts-loader": "^5.3.3",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.2.2"
+    "typescript": "~3.2.2",
+    "webpack-cli": "^3.2.1"
   }
 }
