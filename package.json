@@ -15,8 +15,8 @@
     "mongodb:reset-admin": "echo \"👤 ♻️  Re-creating MongoDB admin user\" && pm2 kill && yarn mongod:auth-disabled && cd mongodb && yarn create:admin",
     "mongodb:reset-app-users": "echo \"👥  ♻️ Re-creating MongoDB app users\" && pm2 kill && yarn mongod:auth-enabled && cd mongodb && yarn create:app-users",
     "mongodb:reset-users": "echo \"♻️  Re-creating MongoDB users\" && yarn mongodb:reset-admin && yarn mongodb:reset-app-users",
-    "api":"cd api && pwd",
-    "api:build":"yarn api && yarn rebuild",
+    "api": "cd api && pwd",
+    "api:build": "yarn api && yarn rebuild",
     "build:api": "echo \"☁️  Building api\" && cd api && yarn rebuild",
     "build:models": "echo \"🗳  Building models\" && cd models && yarn rebuild",
     "build": "yarn build:models && yarn build:api",
@@ -24,7 +24,10 @@
     "test:api": "cd api && yarn test:coverage"
   },
   "devDependencies": {
+    "@angular/platform-server": "^7.2.0",
+    "@nguniversal/module-map-ngfactory-loader": "^7.0.2",
     "pm2": "^3.2.2",
+    "ts-loader": "^5.3.3",
     "typescript": "^2.7.2"
   }
 }
