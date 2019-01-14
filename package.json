@@ -15,10 +15,10 @@
     "mongodb:reset-admin": "echo \"👤 ♻️  Re-creating MongoDB admin user\" && pm2 kill && yarn mongod:auth-disabled && cd mongodb && yarn create:admin",
     "mongodb:reset-app-users": "echo \"👥  ♻️ Re-creating MongoDB app users\" && pm2 kill && yarn mongod:auth-enabled && cd mongodb && yarn create:app-users",
     "mongodb:reset-users": "echo \"♻️  Re-creating MongoDB users\" && yarn mongodb:reset-admin && yarn mongodb:reset-app-users",
-    "api":"cd api && pwd",
-    "api:build":"yarn api && yarn rebuild",
-    "build:api": "echo \"☁️  Building api\" && cd api && yarn rebuild",
-    "build:models": "echo \"🗳  Building models\" && cd models && yarn rebuild",
+    "api": "cd api && pwd",
+    "api:build": "yarn api && yarn rebuild",
+    "build:api": "echo \"☁️  Building api\" && cd api && yarn link models && yarn rebuild",
+    "build:models": "echo \"🗳  Building models\" && cd models && yarn unlink && yarn rebuild && yarn link",
     "build": "yarn build:models && yarn build:api",
     "test": "yarn test:api",
     "test:api": "cd api && yarn test:coverage"
@@ -26,5 +26,9 @@
   "devDependencies": {
     "pm2": "^3.2.2",
     "typescript": "^2.7.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.387.0",
+    "dynamo": "^0.2.14"
   }
 }

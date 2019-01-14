@@ -16,9 +16,19 @@ http://localhost:3000/users/login
 
 ###
 
-# 💾  Get a BIG File
-http://localhost:3000/fs/shared%2Fzips.json
+# 🔎  Get Projects
+http://localhost:3000/projects
 
+###
+
+# 💾  Save project
+PUT http://localhost:3000/projects
+Content-type: application/json
+
+{
+    "name":"jyv/core",
+    "versions":["0.0.2"]
+}
 ###
 
 # 👥  Seed Users

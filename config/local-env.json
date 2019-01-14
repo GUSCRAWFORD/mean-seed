@@ -1,8 +1,11 @@
 {
-    "JYV_CONFIG_DEBUG":"query",
+    "JYV_CONFIG_DEBUG":"dynamodb",
 
     "SESSION_HEADER":"x-token",
     "SESSION_SECRET":"session-secret",
     
-    "SYSTEM_PASSWORD":"pass!"
+    "SYSTEM_PASSWORD":"pass!",
+
+    "AWS_ACCESS_KEY_ID":"AKIAJ6A573QFFRUBZTXQ",
+    "AWS_SECRET_ACCESS_KEY":"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"
 }
