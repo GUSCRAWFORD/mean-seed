@@ -12,8 +12,8 @@
     "debug": "echo \"🐞 ▶️  Starting local (debug) environment...\" && pm2 kill && pm2 start config/debug-local-ecosystem.config.js",
     "api":"cd api && pwd",
     "api:build":"yarn api && yarn rebuild",
-    "build:api": "echo \"☁️  Building api\" && cd api && yarn rebuild",
-    "build:models": "echo \"🗳  Building models\" && cd models && yarn rebuild",
+    "build:api": "echo \"☁️  Building api\" && cd api && yarn build",
+    "build:models": "echo \"🗳  Building models\" && cd models && yarn build",
     "build": "yarn build:models && yarn build:api",
     "test": "yarn test:api",
     "test:api": "cd api && yarn test:coverage"

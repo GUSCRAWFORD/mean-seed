@@ -1,0 +1,10 @@
+<mat-drawer-container class="nav-container" autosize>
+  <mat-drawer #drawer class="nav-sidenav" mode="side">
+    <ng-content select=".menu"></ng-content>
+  </mat-drawer>
+
+  <div class="nav-sidenav-content">
+    <ng-content select=".content"></ng-content>
+  </div>
+
+</mat-drawer-container>

@@ -8,6 +8,10 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path:':project/:version/:subProject/:subVersion/:docPath',
+        component:DocsComponent
+  },
+  {
     path:':project/:version/:subProject/:subVersion',
         component:DocsComponent
   },

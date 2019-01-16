@@ -1,8 +1,23 @@
-<app-main-toolbar>
-  docs
-</app-main-toolbar>
-<app-docs-main-toolbar
-  [version]="version"
-  [project]="project"
-></app-docs-main-toolbar>
-<div [innerHtml]="docs"></div>
+
+<app-main-nav-menu>
+  <div class="menu">
+    <button mat-button type="button"
+      *ngFor="let link of links"
+      (click)="loadDocPage(link.tsdocRef)">
+      {{link.innerText}}
+    </button>
+  </div>
+  <div class="content">
+    <div class="abs toolbars mat-elevation-z6">
+      <app-main-toolbar>
+        docs
+      </app-main-toolbar>
+      <app-docs-main-toolbar
+        [version]="params.version"
+        [project]="params.project"
+      ></app-docs-main-toolbar>
+    </div>
+    <div [innerHtml]="docs" class="contents"></div>
+  </div>
+  
+</app-main-nav-menu>
