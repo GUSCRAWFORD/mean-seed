@@ -30,8 +30,8 @@
     "node": "8.11.*"
   },
   "dependencies": {
-    "@jyv/core": "^1.0.1",
-    "@jyv/mongo": "^1.0.2",
+    "@jyv/core": "^1.0.2",
+    "@jyv/mongo": "^1.0.4",
     "@types/bcrypt": "^3.0.0",
     "bcrypt": "^3.0.3",
     "cookie-parser": "~1.4.3",
