@@ -80,13 +80,13 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@jyv/core@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@jyv/core/-/core-1.0.1.tgz#de09ab6e60f68743d953c48aa40fdc5fbafcf592"
-
-"@jyv/mongo@^1.0.2":
+"@jyv/core@^1.0.2":
   version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@jyv/mongo/-/mongo-1.0.2.tgz#c049f0f7ad89499e530ad7f3d9e4f28b37884bbc"
+  resolved "https://registry.yarnpkg.com/@jyv/core/-/core-1.0.2.tgz#2fb013f4e077f9426667f85ca6d3cf867a6fdcfc"
+
+"@jyv/mongo@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@jyv/mongo/-/mongo-1.0.4.tgz#9bb32172f67abf43f44538c934e30d75edbc1972"
 
 "@sinonjs/commons@^1.0.2", "@sinonjs/commons@^1.2.0":
   version "1.3.0"
