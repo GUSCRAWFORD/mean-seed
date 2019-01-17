@@ -9,8 +9,8 @@ import { RouteFactory } from '../../../src/app/config/route.config';
 RouteFactory.expressInstance = MockExpress.instance;
 
 process.env.DEFAULT_SESSION_HEADER='x';
-import { config as session } from '../../../src/app/config/session-jwt.config';
-session(MockApp.instance,{});
+//import { config as session } from '../../../src/app/config/session-jwt.config';
+//session(MockApp.instance,{});
 //const USERS_ROUTE = 'users';
 describe(`⚙️  User Route config`, function (){
     //console.info(routes);

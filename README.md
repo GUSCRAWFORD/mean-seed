@@ -14,18 +14,24 @@
    1. A "debug" topic helper function
    2. Foundational service for managing "in-memory" data
    3. A uniform "timestamp" service for outputting a current date in locale
+4. A unit test configuration with coverage
+  * Mocha
+  * Sinon
+  * Istanbul
+5. An extensible `pm2` environment config
 
 ## Why is it Useful?
 
 1. The pre-fab components will broadly configure and use middleware as per common recipes
 2. Start with more out-of-the-box
 3. Start with an express application and a typescriipt build pipeline
+4. Start with a test-driven-development approach
 
 
 ## Envionrment Pre-requisites
 
 1. [📦 Node.js 8.11.4](https://nodejs.org/download/release/v8.11.4/)
-2. 
+
 ## Start Local @project
 
 1. `yarn start`
