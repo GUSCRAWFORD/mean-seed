@@ -6,7 +6,8 @@ import {
   MatToolbarModule,
   MatMenuModule,
   MatSidenavModule,
-  MatIconModule
+  MatIconModule,
+  MatCardModule, MatCard
 } from '@angular/material';
 import {
   ScrollDispatchModule
@@ -19,6 +20,7 @@ import {
     MatCheckboxModule,
     MatToolbarModule,
     MatIconModule,
+    MatCardModule,
 
     //CDK
     ScrollDispatchModule
@@ -30,6 +32,7 @@ import {
     MatMenuModule,
     MatSidenavModule,
     MatIconModule,
+    MatCardModule,
 
     //CDK
     ScrollDispatchModule

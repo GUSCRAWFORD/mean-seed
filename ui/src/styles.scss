@@ -24,3 +24,49 @@ body {
         position: absolute;
     }
 }
+.contents {
+    overflow:auto;
+    position: absolute;
+    top:128px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    padding:24px;
+    &-tb-2 {
+
+        overflow:auto;
+        position: absolute;
+        top:128px;
+        bottom:0px;
+        left:0px;
+        right:0px;
+        padding:24px;
+    }
+    &-tb-1 {
+        top:64px;
+        bottom:0px;
+        left:0px;
+        right:0px;
+        padding:24px;
+        overflow:auto;
+        position: absolute;
+    }
+}
+.menu [mat-button] {
+    width:100%;
+    display:block;
+    text-align: left;
+}
+mat-card {
+    max-width:400px;
+    
+        [mat-card-avatar] {
+            background-image: url('/assets/gus-sm.jpg');
+            background-size: cover;
+        }
+    
+}
+hr {
+    border:none;
+    border-top: 1px solid silver;
+}
