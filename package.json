@@ -7,7 +7,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "postinstall": "cd api && yarn install && cd ../models && yarn install && cd ../ui && yarn install",
+    "postinstall":"cd api && npm i",
+    "install:all": "cd api && yarn install && cd ../models && yarn install && cd ../ui && yarn install",
     "start": "echo \"▶️  Starting local environment...\" && pm2 kill && yarn build:api && pm2 start config/local-ecosystem.config.js",
     "debug": "echo \"🐞 ▶️  Starting local (debug) environment...\" && pm2 kill && pm2 start config/debug-local-ecosystem.config.js",
     "stop":"pm2 kill",
@@ -19,7 +20,7 @@
     "build": "yarn build:models && yarn build:api",
     "test": "yarn test:api",
     "test:api": "cd api && yarn test:coverage",
-    "predeploy":"yarn build && yarn build:ui && cp -r ui/dist/ui api/public",
+    "predeploy":"yarn build && yarn build:ui && cp -ri ui/dist/ui api/public",
     "deploy:test":"eb deploy test-guscrawford",
     "eb:start":"cd api && npm start"
   },

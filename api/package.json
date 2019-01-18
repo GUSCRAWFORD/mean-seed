@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./dist/bin/src/www",
+    "start": "node ./dist/bin/www",
     "clean": "echo \"🗑  Cleaning API...\" && rimraf dist",
     "build": "echo \"🛠  Building API...\" && cd src && tsc --diagnostics",
     "rebuild": "yarn clean && yarn build",
@@ -43,7 +43,8 @@
     "morgan": "~1.9.0",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "source-map-support": "^0.5.10"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.3.0",
