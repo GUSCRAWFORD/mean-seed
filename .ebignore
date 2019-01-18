@@ -1,0 +1,10 @@
+**/*
+!api/dist
+!api/public
+!api/private
+!api/translations
+!api/views
+!api/package.json
+!api/yarn.lock
+**/package.json
+!.ebextensions
