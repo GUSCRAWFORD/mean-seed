@@ -1,6 +1,6 @@
 {
   "name": "mean-seed",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Any application",
   "main": "index.js",
   "author": "Gus",
@@ -10,6 +10,7 @@
     "postinstall": "cd api && yarn install && cd ../models && yarn install && cd ../ui && yarn install",
     "start": "echo \"▶️  Starting local environment...\" && pm2 kill && yarn build:api && pm2 start config/local-ecosystem.config.js",
     "debug": "echo \"🐞 ▶️  Starting local (debug) environment...\" && pm2 kill && pm2 start config/debug-local-ecosystem.config.js",
+    "stop":"pm2 kill",
     "api":"cd api && pwd",
     "api:build":"yarn api && yarn rebuild",
     "build:api": "echo \"☁️  Building api\" && cd api && yarn rebuild",

@@ -5,7 +5,7 @@
 import { config as routes} from './route.config';     // Configure and map all control-routes
 import { config as errors } from './errors.config';   // Configure errors for other client Accept headers
 import { config as session} from './session.config';  // Configure session fundamentals
-import { config as jwt } from './session-jwt.config'; // Configure jwt specifics
+// import { config as jwt } from './session-jwt.config'; // Configure jwt specifics
 import { Application } from 'express';
 const createError = require('http-errors');
 /**
@@ -18,12 +18,12 @@ export const config = function (app:Application) {
    */
   session(app,{ // Run top-level session configurations
     sessionConfigs:[
-      ()=>jwt(app, {  // Configure specific session providers and types
-        /** pass config options here */
-        onLogin:(username, password)=>DEFAULT_PROFILE,
-        onLogout:(username)=>Promise.resolve({}),
-        onProfile:(username)=>DEFAULT_PROFILE
-      })
+      // ()=>jwt(app, {  // Configure specific session providers and types
+      //   /** pass config options here */
+      //   onLogin:(username, password)=>DEFAULT_PROFILE,
+      //   onLogout:(username)=>Promise.resolve({}),
+      //   onProfile:(username)=>DEFAULT_PROFILE
+      // })
     ]
   });
   routes(app);
