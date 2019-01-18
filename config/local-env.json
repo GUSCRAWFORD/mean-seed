@@ -1,8 +1,5 @@
 {
-    "JYV_CONFIG_DEBUG":"query",
-
-    "SESSION_HEADER":"x-token",
-    "SESSION_SECRET":"session-secret",
-    
-    "SYSTEM_PASSWORD":"pass!"
+    "G_APPS_CLIENT_ID":"61784288677-3grjdj456b808k4q01nu1hm192igr7jo.apps.googleusercontent.com",
+    "G_APPS_CLIENT_SECRET":"9-3nlTtBTQOM9si-a1eDRgFR",
+    "G_APPS_OAUTH2_CALLBACK":"/users/oauth"
 }

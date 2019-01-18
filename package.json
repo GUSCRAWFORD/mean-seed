@@ -15,9 +15,13 @@
     "api:build":"yarn api && yarn rebuild",
     "build:api": "echo \"☁️  Building api\" && cd api && yarn build",
     "build:models": "echo \"🗳  Building models\" && cd models && yarn build",
+    "build:ui":"echo \"🖥  Building (Angular) ui\" && cd ui && yarn build",
     "build": "yarn build:models && yarn build:api",
     "test": "yarn test:api",
-    "test:api": "cd api && yarn test:coverage"
+    "test:api": "cd api && yarn test:coverage",
+    "predeploy":"yarn build && yarn build:ui && cp -r ui/dist/ui api/public",
+    "deploy:test":"eb deploy test-guscrawford",
+    "eb:start":"cd api && npm start"
   },
   "devDependencies": {
     "pm2": "^3.2.2",
