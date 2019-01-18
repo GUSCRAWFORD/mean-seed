@@ -10,9 +10,9 @@
     "postinstall": "cd api && yarn install && cd ../models && yarn install",
     "start": "echo \"▶️  Starting local environment...\" && pm2 kill && yarn build:api && pm2 start config/local-ecosystem.config.js",
     "debug": "echo \"🐞 ▶️  Starting local (debug) environment...\" && pm2 kill && pm2 start config/debug-local-ecosystem.config.js",
-    "stop":"pm2 kill",
-    "api":"cd api && pwd",
-    "api:build":"yarn api && yarn rebuild",
+    "stop": "pm2 kill",
+    "api": "cd api && pwd",
+    "api:build": "yarn api && yarn rebuild",
     "build:api": "echo \"☁️  Building api\" && cd api && yarn rebuild",
     "build:models": "echo \"🗳  Building models\" && cd models && yarn rebuild",
     "build": "yarn build:models && yarn build:api",
@@ -22,5 +22,9 @@
   "devDependencies": {
     "pm2": "^3.2.2",
     "typescript": "^2.7.2"
+  },
+  "dependencies": {
+    "express-session": "^1.15.6",
+    "passport-google-oauth20": "^1.0.0"
   }
 }
