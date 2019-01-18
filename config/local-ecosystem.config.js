@@ -36,8 +36,9 @@ module.exports = {
     ,{
       name:'ui',
       cwd:'ui',
-      script:'yarn start',
-      env: require('./local-env')
+      script:'node_modules/@angular/cli/lib/init.js',
+      env: require('./local-env'),
+      args:'serve'
     }
   ],
 
