@@ -14,5 +14,5 @@ after_script:
   - cd ..
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - pip --version
-  - pip install awsebcli --upgrade
+  - suod pip install awsebcli --upgrade
   - eb --version
