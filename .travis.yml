@@ -23,6 +23,7 @@ deploy:
   region: us-east-1
   app: guscrawford.com
   env: test-guscrawford
+  bucket_name: elasticbeanstalk-us-east-1-479868173489
   on:
     repo: GUSCRAWFORD/mean-seed
     branch: guscrawford.com
