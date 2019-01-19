@@ -1,18 +1,28 @@
 env:
   global:
-    - CC_TEST_REPORTER_ID=a2ed882c796fe4077c74315d586449b459e57aee14874f244272162fc40d4eb9
+  - CC_TEST_REPORTER_ID=a2ed882c796fe4077c74315d586449b459e57aee14874f244272162fc40d4eb9
 language: node_js
 node_js:
-  - "8.11.4"
+- 8.11.4
 before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-  - cd api
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
+- cd api
 script: yarn install && yarn test:coverage
 after_script:
-  - cd ..
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-  - pip --version
-  - suod pip install awsebcli --upgrade
-  - eb --version
+- cd ..
+- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+- yarn predeploy
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: AKIAJBNYYR6YY4PXEMWA
+  secret_access_key:
+    secure: DBjRkczQm/brnYyceZiyT7E24tGl2a/1UnpgT6k3ps+kk9I969PbelX5g1YjuunEnmJf9FilFkCWHg5n56XLalcC0k6ND8ml8VmtGvJd4q3b0ioMV8AKoad9+7qNL6yXHc71jiwRrInqTu8BkXwA+3eNAvzz+kgHjnXvlY8ps0m+an57MtPB8JqOhPd5Sfc0wjKl3ifYUrgOftOMs9xgdyyjaU4dFm9mydxLG+vzrtPimZf06HF7+pGbqBYtiub3ahPoxqThdoFBpT0xtl0k+p3Uok1cspQmnAHvB54X45ramNx2v4g+XpifFALA57LazUGe7TzW2Qo9ekeLl6PwoNJPYd5rT3UnNs5QsenqVYZP10CnPL32AKUVmwyY9f0mlQRaQ8xJ9gdmALWmZMwCuygG1pc98qj9ex/dC3J0wXK0eidW3QyO2Muu1L3+8IHDnt261IqYLwM5RQrvyYWYzWBB8fWhE1bxsvjaNdrT7V/wiUAHB5bcKBmSM246kvma6DrA9mGxS0LFhbVriZ+vbqqN6K1GCN8pV6UpNbaMMHwItBsvAcKGpscr4pwJOf59ymbhjm0E2lLPZZqy0mvUuBa38I/sH2QFNsrm00X0p/8VbmlpWE48BpQpDYzx0AvwWd5BFbCSUKoGt1PeRH9oYQs/eHyoAGt8IBde6abKjwc=
+  region: us-east-1
+  app: guscrawford.com
+  env: test-guscrawford
+  on:
+    repo: GUSCRAWFORD/mean-seed
+    branch: guscrawford.com
