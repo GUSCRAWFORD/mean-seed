@@ -28,7 +28,7 @@ export class TsDocParserService extends WithEvents<AppEvent> {
     var tsdoc = await this.http.get(uri, {responseType:'text'}).toPromise();
     var dom = { root: document.createElement('html'), contents:null, menu:null, links:[] };
     dom.root.innerHTML = tsdoc;
-    dom.contents = dom.root.querySelector('div.container.container-main > div.row > div.col-8.col-content .tsd-panel.tsd-typography');
+    dom.contents = dom.root.querySelector('div.container.container-main > div.row > div.col-8.col-content'/* .tsd-panel.tsd-typography'*/);
     dom.menu = dom.root.querySelector(`div.container.container-main > div.row > div.col-4.col-menu.menu-sticky-wrap`);
     try {
       dom.links = Array.from(dom.menu.getElementsByTagName(`a`)).map(elm=>this.transformLink(elm as any, uri));

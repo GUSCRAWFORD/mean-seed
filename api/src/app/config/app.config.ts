@@ -1,4 +1,5 @@
-
+const express = require('express');
+const path = require('path');
 /**
  * Tie your middleware together in this root process start configuration:
  */
@@ -16,21 +17,30 @@ export const config = function (app:Application) {
   /**
    * Config services
    */
-  session(app,{ // Run top-level session configurations
-    sessionConfigs:[
-      // ()=>jwt(app, {  // Configure specific session providers and types
-      //   /** pass config options here */
-      //   onLogin:(username, password)=>DEFAULT_PROFILE,
-      //   onLogout:(username)=>Promise.resolve({}),
-      //   onProfile:(username)=>DEFAULT_PROFILE
-      // })
-    ]
-  });
+  // session(app,{ // Run top-level session configurations
+  //   sessionConfigs:[
+  //     // ()=>jwt(app, {  // Configure specific session providers and types
+  //     //   /** pass config options here */
+  //     //   onLogin:(username, password)=>DEFAULT_PROFILE,
+  //     //   onLogout:(username)=>Promise.resolve({}),
+  //     //   onProfile:(username)=>DEFAULT_PROFILE
+  //     // })
+  //   ]
+  // });
   routes(app);
   errors(app); // Run error config for application
+
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
-    next(createError(404));
+    //try {
+      //res.type('html').status(200).sendFile(path.join(process.cwd(), 'public','ui','index.html'));
+    //} catch (e) {
+
+      //next(createError(404));
+      res.type('html').status(200).sendFile(path.join(process.cwd(), 'public','ui','index.html'));
+    //}
   });
 
+  //app.use(express.static(path.join(process.cwd(),'public','ui')));
+  //app.use(/\/*/,express.static(path.join(process.cwd(),'public','ui')));
 }

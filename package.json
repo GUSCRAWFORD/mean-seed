@@ -19,7 +19,7 @@
     "build": "yarn build:models && yarn build:api",
     "test": "yarn test:api",
     "test:api": "cd api && yarn test:coverage",
-    "predeploy": "cd ui && yarn install && yarn build:ui && cp -rv ui/dist/ui api/public",
+    "predeploy": "cd ui && yarn install && cd .. && yarn build:ui && cp -rv ui/dist/ui api/public",
     "deploy:test": "eb deploy test-guscrawford",
     "eb:start": "cd api && npm start"
   },
