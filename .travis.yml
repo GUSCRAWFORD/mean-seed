@@ -10,10 +10,8 @@ before_script:
 - chmod +x ./cc-test-reporter
 - "./cc-test-reporter before-build"
 - yarn predeploy
-- cd api
-script: yarn install && yarn test:coverage
+script: yarn install && yarn test
 after_script:
-- cd ..
 - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
 deploy:
   provider: elasticbeanstalk
