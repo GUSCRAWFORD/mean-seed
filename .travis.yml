@@ -15,6 +15,8 @@ after_script:
 - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
 deploy:
   provider: elasticbeanstalk
+  edge:
+    branch: ebignore
   access_key_id:
     secure: oleRyNHJ1G4IpJru1ObmyejPn1szlVQJ1zzWCBKSyYsgMnv99kG2RHpMHc7/L6PAu9/vLxBxF9SDNIo0xYSw4LvG0NHfc4G1AHRZ082eg/ZvdrGfhfgq1UowwQolGdgkUtY8o8wpvJQ5wo3AdKeiBvQ4eMUIWw9H0jO8KCx+JfmAcmKWVh1HZqrff+hS1fNeupGuciCo8P4H8uMEWbmVQkETVSCR+pSPLEWRBuAAt1dgU/wK7cbKWm+fc2TOq9Q25J2n3AvWKNe86trBEdyU8bmHH/6GpBHWzp9uEH0s46qDaC7yxQErYjQJUTsaY2RPlfGyVDv04GNc8cAnWmLlklb8MpY/y73WU2nwKIXOUUmPa74kRxReNwU4PxKVrJ6HcnkdRuOale5dCFa07qO8MiPC75khYy9dgroeqOKk7DIC8MS7EMINuqAARyxRt7Xj0XE2gEQvNiNgorkJAl9ylL3NkvszynPULu6sHEMGX3lKtc9LPvIBEmSHb9RPeh2Uddg+jo14PY/TSh0Tom6vCZAZlgAcv+HggyI4kRz8wCB001mmMnlufp+ggrRDn5MsXDZAzQfQxngnAIRNb4w9y904EDtgMXhX5Ccr0+ku/OQkhstOUjvklgvg95QAXxPb24IQLTH5J9sgvg4s5nAj6RQcU3LEgD5oRiVdLe4avI0=
   secret_access_key:
@@ -23,6 +25,7 @@ deploy:
   app: guscrawford.com
   env: test-guscrawford
   bucket_name: elasticbeanstalk-us-east-1-479868173489
+  skip_cleanup: true
   on:
     repo: GUSCRAWFORD/mean-seed
     branch: guscrawford.com
