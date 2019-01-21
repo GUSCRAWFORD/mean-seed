@@ -1,4 +1,6 @@
 {
+    "HOST":"localhost",
+    "API_ROOT":"",
     "JYV_CONFIG_DEBUG":"query",
 
     "SESSION_HEADER":"x-token",

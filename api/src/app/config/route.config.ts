@@ -1,11 +1,11 @@
 import { TS } from "../services/timestamp";
-//import { Protection } from './session.config';
 const express = require('express');
 const createError = require('http-errors');
+const API_ROOT = process.env.API_ROOT || '';
 export const config = function (app:any) {
     const { routes } = require('../routes');
     Object.keys(routes).forEach(route=>{
-        app.use(`${route}`, routes[route].router)
+        app.use(`${API_ROOT?API_ROOT+'/':''}${route}`, routes[route].router)
     });
 }
 export type RoutePath = {
@@ -19,26 +19,19 @@ export class RouteFactory {
         public path:any,
         public routeMap:{
             [key:string]: RoutePath
-        },
-        public sessionProtection?:any
+        }
     ) {
         Object.keys(this.routeMap).forEach(routePath=>{
             this.mapRoutePath(routePath);
         });
     }
-    private mapRoutePath(routePath:string) {
+    protected mapRoutePath(routePath:string) {
         Object.keys(this.routeMap[routePath]).forEach(method=>{
             var routerArguments:any[] = [routePath];
-            if (this.sessionProtection) this.protect(routerArguments, routePath);
             this.handle(routerArguments, routePath, method);
         });
     }
-    private protect(routerArguments:any[], routePath:string) {
-        routerArguments.push(
-            (this.sessionProtection as any).protects(`${this.path}${routePath}`)
-        );
-    }
-    private handle(routerArguments:any[], routePath:string, method:string) {
+    protected handle(routerArguments:any[], routePath:string, method:string) {
         routerArguments.push(
             (this.routeMap[routePath][method] as any)[`$handle_${method}_${this.path}${routePath}`] = async (request:any, response:any, next:any)=>{
                 var result;
