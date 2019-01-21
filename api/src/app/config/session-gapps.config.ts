@@ -6,6 +6,7 @@ import { SessionConfigOptions, Protection } from './session.config';
 import { GET_PROFILE_FACTORY, HANDLE_LOGIN_FACTORY, HANDLE_LOGOUT_FACTORY, AUTHENTICATE_FACTORY } from '../services/session-gapps';
 import { Passport, Authenticator } from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import * as session from 'express-session';
 import { Handler } from 'express';
 export * from './session.config';
 export class GAppsService {
@@ -26,9 +27,10 @@ export class GAppsSessionConfigOptions extends SessionConfigOptions {
     //algorithms?:string[] = process.env.SESSION_JWT_ALGORITHMS && process.env.SESSION_JWT_ALGORITHMS.split(',')||['HS256']
     //audience?:string = process.env.SESSION_JWT_AUDIENCE || this.host;
     //issuer?:string = process.env.SESSION_JWT_ISSUER || this.host;
+    scope?:string[]=process.env.SESSION_GAPPS_SCOPE&&process.env.SESSION_GAPPS_SCOPE.split(/\s*,\s*/)||['email','profile'];
     loginPath?:string = process.env.SESSION_JWT_LOGIN_PATH||'/users/login';
     logoutPath?:string = process.env.SESSION_JWT_LOGOUT_PATH||`/users/logout`;
-    onLogin?:(username:string,password:string)=>Promise<any>;
+    onLogin?:(profile:{id:string,displayName:string})=>Promise<any>;
     onLogout?:(username:string)=>Promise<any>;
     onAuthenticate?:(success:any,req:any)=>Promise<any>;
     onFailedAuthenticate?:(error:any,req:any)=>Promise<any>;
@@ -97,7 +99,7 @@ function mapRoutes (app:any, options: GAppsSessionConfigOptions, PASSPORT: any) 
 }
 
 
-export function configX(router, passport, ProfilesController) {
+function configOLD(router, passport, ProfilesController) {
     // Login
     // https://cloud.google.com/nodejs/getting-started/authenticate-users
     router.get(

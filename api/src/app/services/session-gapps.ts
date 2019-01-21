@@ -10,27 +10,20 @@ DEBUG_TOPIC = 'gapps-oauth';
 export const GET_PROFILE_FACTORY = (options:GAppsSessionConfigOptions) => async function getProfile(req:any,res:any,next:any) {
     let profile: any = req.user;
     if (options.onProfile)
-        profile = await options.onProfile(req.user.sub);
+        profile = await options.onProfile(req.user);
     res.json(profile);
     return req.user;
 }
 export const HANDLE_LOGIN_FACTORY = (options:GAppsSessionConfigOptions) => async function handleLogin (req:any, res:any, next:any) {
     try {
-        //if (DEBUG("jwt")) console.log(req.body);
-        if (!req.body) throw new Error(LOGIN_NO_CREDS(req));
-        if (DEBUG(DEBUG_TOPIC)) console.info(`🔑  ${req.body.username} logging in...`);
-        //SET_JWT_FACTORY(options, res)(await VALID_USER(options, req));
+        if (req.query.return) {
+            (req as any).session.oauth2return = req.query.return;
+        }
+        if (DEBUG(DEBUG_TOPIC)) console.info(`🔑  GApps OAuth user logging in...`);
+        next(req, res, null);
     } catch (e) {
         HANDLE_LOGIN_ERROR(e, req, next);
     }
-}
-export const VALID_USER = async (options:GAppsSessionConfigOptions, req:Request)=>{
-    var validUser
-    if (options.onLogin) validUser = await options.onLogin(req.body.username, req.body.password);
-    if (!validUser) {
-        throw new Error(`Invalid password for user ${req.body.username}`);
-    }
-    return validUser;
 }
 export const HANDLE_LOGIN_ERROR = (e:any, req:Request, next:(args?:any)=>any)=> {
     console.error(LOGIN_FAILED(req));
@@ -40,22 +33,33 @@ export const HANDLE_LOGIN_ERROR = (e:any, req:Request, next:(args?:any)=>any)=> 
 }
 export const HANDLE_LOGOUT_FACTORY = (options:GAppsSessionConfigOptions) => async function handleLogout(req:any, res:any, next:any) {
     let receipt:any = req.user;
-    if (DEBUG("jwt")) console.info(`👤  🚪  ${req.user.sub} logged out...`);
+    if (DEBUG(DEBUG_TOPIC)) console.info(`👤  🚪  ${req.user.sub} logged out...`);
     try {
         if (options.onLogout)
-            receipt = await options.onLogout(req.user.sub);
-        //setJwtCookie(res, options, '', 0, 0, receipt);
+            receipt = await options.onLogout(req.user);
+        (req as any).logout();
+        //res.redirect('/');
     }
     catch (e) {
         console.log(e);
     }
     return req.user;
 }
-
+export const VALID_OAUTH2 = async (options:GAppsSessionConfigOptions, req:Request, res:Response)=>{
+    const redirect = (req as any).session.oauth2return || '/';
+    delete (req as any).session.oauth2return;
+    var validUser, profile = req.user||null;
+    if (options.onLogin) validUser = await options.onLogin(profile);
+    res.redirect(redirect);
+    if (!validUser) {
+        throw new Error(`Invalid user ${req.body.username}`);
+    }
+    return validUser;
+}
 export const AUTHENTICATE_FACTORY = (options:GAppsSessionConfigOptions, PASSPORT:Authenticator<Handler, any, any>) => async function authenticate (req:any,res:any,next:any) {
     return PASSPORT.authenticate(
-        "jwt",
-        { session: false, failWithError: req.app.get('env') === 'development' },
+        "google",
+        { scope: ['email','profile'], failWithError: req.app.get('env') === 'development' },
         async (err, success)=>{
             const GENERAL_FAIL = async (err:any)=>{
                 if (options.onFailedAuthenticate)
@@ -63,8 +67,8 @@ export const AUTHENTICATE_FACTORY = (options:GAppsSessionConfigOptions, PASSPORT
                 err.status = UNAUTHORIZED;
                 throw err;
             }
-            if (DEBUG('jwt'))
-                console.info(`🔑' JWT: ${JSON.stringify(success)}`);
+            if (DEBUG(DEBUG_TOPIC))
+                console.info(`🔑' GApps OAuth: ${JSON.stringify(success)}`);
             if (err) {
                 console.error(`🛑 err: ${err}`+TS());
                 GENERAL_FAIL(err);

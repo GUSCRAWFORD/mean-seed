@@ -6,7 +6,7 @@ const path = require('path');
 import { config as routes} from './route.config';     // Configure and map all control-routes
 import { config as errors } from './errors.config';   // Configure errors for other client Accept headers
 import { config as session} from './session.config';  // Configure session fundamentals
-import { config as gapps } from './session-gapps.config'; // Configure jwt specifics
+import { config as gapps } from './session-gapps.config'; // Configure gapps specifics
 import { Application } from 'express';
 const createError = require('http-errors');
 /**
@@ -21,7 +21,8 @@ export const config = function (app:Application) {
     sessionConfigs:[
       ()=>gapps(app, {  // Configure specific session providers and types
         /** pass config options here */
-        onLogin:(username, password)=>DEFAULT_PROFILE,
+        scope: ['email', 'profile'],
+        onLogin:(proflie)=>DEFAULT_PROFILE,
         onLogout:(username)=>Promise.resolve({}),
         onProfile:(username)=>DEFAULT_PROFILE
       })
