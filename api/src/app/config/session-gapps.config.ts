@@ -27,7 +27,7 @@ export class GAppsSessionConfigOptions extends SessionConfigOptions {
     scope?:string[]=process.env.SESSION_GAPPS_SCOPE&&process.env.SESSION_GAPPS_SCOPE.split(/\s*,\s*/)||['email','profile'];
     loginPath?:string = process.env.SESSION_GAPPS_LOGIN_PATH||'/users/login';
     logoutPath?:string = process.env.SESSION_GAPPS_LOGOUT_PATH||`/users/logout`;
-    redirectPath?:string = process.env.SESSION_GAPPS_REDIRECT_PATH||`/users/oauth2`;
+    redirectPath?:string = process.env.SESSION_GAPPS_REDIRECT_PATH||`/users/oauth`;
     onLogin?:(profile:{id:string,displayName:string})=>Promise<any>;
     onLogout?:(username:string)=>Promise<any>;
     onAuthenticate?:(success:any,req:any)=>Promise<any>;
@@ -60,7 +60,7 @@ export function config(
         new GoogleStrategy(
             {
                 passReqToCallback:true,
-                secretOrKey: options.secret,
+                //secretOrKey: options.secret,
 
                 clientID: process.env.G_APPS_CLIENT_ID,
                 clientSecret: process.env.G_APPS_CLIENT_SECRET,
@@ -69,15 +69,23 @@ export function config(
             },
             //(req:any, decodedJwt:any, done:any)
             (
-                accessToken:any,
+                //accessToken:any,
+                req:any,
                 refreshToken:any,
                 profile:any,
                 done:(err:any,extractedProfile:any)=>any
             )=>{
                 //console.info(req);
-                if (DEBUG("gapps-oauth")) {
-                    console.info(`🔑  👤  Authenticating request:`);
-                    console.log(profile);
+                if (true/*DEBUG("gapps-oauth")*/) {
+                    console.info(`🔑  👤  GApps OAuth2 Diagnostics:`);
+                    console.info(`profile:`);
+                    console.info(profile);
+                    // console.info('accessToken:');
+                    // console.info(accessToken);
+                    console.info('refreshToken:');
+                    console.info(refreshToken);
+                    console.info('user:');
+                    console.info(req.user);
                 }
                 return done(null, extractProfile(profile));
             }

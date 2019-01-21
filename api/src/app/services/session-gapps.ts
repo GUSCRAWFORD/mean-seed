@@ -45,7 +45,7 @@ export const HANDLE_LOGOUT_FACTORY = (options:GAppsSessionConfigOptions) => asyn
     }
     return req.user;
 }
-export const VALID_OAUTH2 = async (options:GAppsSessionConfigOptions)=> async function validOAuth2 (req:Request, res:Response, next:any){
+export const VALID_OAUTH2 = (options:GAppsSessionConfigOptions)=> async function validOAuth2 (req:Request, res:Response, next:any){
     const redirect = (req as any).session.oauth2return || '/';
     delete (req as any).session.oauth2return;
     var validUser, profile = req.user||null;
@@ -56,7 +56,7 @@ export const VALID_OAUTH2 = async (options:GAppsSessionConfigOptions)=> async fu
     }
     return validUser;
 }
-export const AUTHENTICATE_FACTORY = (options:GAppsSessionConfigOptions, PASSPORT:Authenticator<Handler, any, any>) => async function authenticate (req:any,res:any,next:any) {
+export const AUTHENTICATE_FACTORY = (options:GAppsSessionConfigOptions, PASSPORT:Authenticator<Handler, any, any>) => function authenticate (req:any,res:any,next:any) {
     return PASSPORT.authenticate(
         "google",
         { scope: ['email','profile'], failWithError: req.app.get('env') === 'development' },
