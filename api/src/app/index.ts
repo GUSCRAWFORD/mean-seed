@@ -5,6 +5,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const STATIC_UI = path.join(process.cwd(),'public','ui');
 /**
  * App specific config
  */
@@ -19,10 +20,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-console.info(`📂  Serving static files from: ${path.join(process.cwd(),'public')}`)
-//app.use(express.static(path.join(process.cwd(),'public')));
-//app.use('/*',express.static(path.join(process.cwd(),'public')));
-app.use(express.static(path.join(process.cwd(),'public','ui')));
+console.info(`📂  Serving static files from: ${STATIC_UI}`)
+app.use(express.static(STATIC_UI));
 config(app); // Configure specifics...
-//app.get('*',(req,res)=>res.sendFile(path.join(process.cwd(), 'public/index.html')))
 export { app };
