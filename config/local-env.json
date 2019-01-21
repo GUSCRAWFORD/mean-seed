@@ -1,5 +1,9 @@
 {
-    "G_APPS_CLIENT_ID":"61784288677-3grjdj456b808k4q01nu1hm192igr7jo.apps.googleusercontent.com",
-    "G_APPS_CLIENT_SECRET":"9-3nlTtBTQOM9si-a1eDRgFR",
-    "G_APPS_OAUTH2_CALLBACK":"/users/oauth"
+    "JYV_CONFIG_DEBUG":"gapps-oauth",
+
+    "SESSION_SECRET":"session-secret",
+    
+    "SESSION_GAPPS_CLIENT_ID":"61784288677-3grjdj456b808k4q01nu1hm192igr7jo.apps.googleusercontent.com",
+    "SESSION_GAPPS_CLIENT_SECRET":"9-3nlTtBTQOM9si-a1eDRgFR",
+    "SESSION_GAPPS_OAUTH2_CALLBACK":"/users/oauth"
 }
