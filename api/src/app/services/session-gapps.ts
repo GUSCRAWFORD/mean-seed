@@ -45,7 +45,7 @@ export const HANDLE_LOGOUT_FACTORY = (options:GAppsSessionConfigOptions) => asyn
     }
     return req.user;
 }
-export const VALID_OAUTH2 = async (options:GAppsSessionConfigOptions, req:Request, res:Response)=>{
+export const VALID_OAUTH2 = async (options:GAppsSessionConfigOptions)=> async function validOAuth2 (req:Request, res:Response, next:any){
     const redirect = (req as any).session.oauth2return || '/';
     delete (req as any).session.oauth2return;
     var validUser, profile = req.user||null;

@@ -3,7 +3,7 @@
 // https://cloud.google.com/nodejs/getting-started/authenticate-users
 import { DEBUG } from '../services/debug';
 import { SessionConfigOptions, Protection } from './session.config';
-import { GET_PROFILE_FACTORY, HANDLE_LOGIN_FACTORY, HANDLE_LOGOUT_FACTORY, AUTHENTICATE_FACTORY } from '../services/session-gapps';
+import { GET_PROFILE_FACTORY, HANDLE_LOGIN_FACTORY, HANDLE_LOGOUT_FACTORY, AUTHENTICATE_FACTORY, VALID_OAUTH2 } from '../services/session-gapps';
 import { Passport, Authenticator } from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import * as session from 'express-session';
@@ -24,18 +24,15 @@ export class GAppsProtection extends Protection {
     }
 }
 export class GAppsSessionConfigOptions extends SessionConfigOptions {
-    //algorithms?:string[] = process.env.SESSION_JWT_ALGORITHMS && process.env.SESSION_JWT_ALGORITHMS.split(',')||['HS256']
-    //audience?:string = process.env.SESSION_JWT_AUDIENCE || this.host;
-    //issuer?:string = process.env.SESSION_JWT_ISSUER || this.host;
     scope?:string[]=process.env.SESSION_GAPPS_SCOPE&&process.env.SESSION_GAPPS_SCOPE.split(/\s*,\s*/)||['email','profile'];
-    loginPath?:string = process.env.SESSION_JWT_LOGIN_PATH||'/users/login';
-    logoutPath?:string = process.env.SESSION_JWT_LOGOUT_PATH||`/users/logout`;
+    loginPath?:string = process.env.SESSION_GAPPS_LOGIN_PATH||'/users/login';
+    logoutPath?:string = process.env.SESSION_GAPPS_LOGOUT_PATH||`/users/logout`;
+    redirectPath?:string = process.env.SESSION_GAPPS_REDIRECT_PATH||`/users/oauth2`;
     onLogin?:(profile:{id:string,displayName:string})=>Promise<any>;
     onLogout?:(username:string)=>Promise<any>;
     onAuthenticate?:(success:any,req:any)=>Promise<any>;
     onFailedAuthenticate?:(error:any,req:any)=>Promise<any>;
     onProfile?:(user:any)=>Promise<any>;
-    //sign?:(sub:string, payload:any)=>any;
 }
 
 export function extractProfile (profile) {
@@ -96,6 +93,7 @@ function mapRoutes (app:any, options: GAppsSessionConfigOptions, PASSPORT: any) 
     app.get(`${options.logoutPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), HANDLE_LOGOUT_FACTORY(options));
     app.post(`${options.logoutPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), HANDLE_LOGOUT_FACTORY(options));
     app.put(`${options.logoutPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), HANDLE_LOGOUT_FACTORY(options));
+    app.get(`${options.redirectPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), VALID_OAUTH2(options));
 }
 
 
