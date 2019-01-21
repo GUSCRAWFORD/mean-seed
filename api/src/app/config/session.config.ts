@@ -1,5 +1,7 @@
-import { Request, Response } from "express";
+import { Request, Response, Application } from "express";
 
+import * as session from 'express-session';
+import * as PASSPORT from 'passport';
 export const DEFAULT_SESSION_SECRET = process.env.SESSION_SECRET || 'hardcoded-secret';
 export const DEFAULT_SESSION_HEADER = process.env.SESSION_HEADER || 'x-token';
 export class SessionConfigOptions {
@@ -23,16 +25,26 @@ export class Protection {
         return protectionKey?this.paths[protectionKey]:(q:Request,s:Response,x:(q:Request,s:Response,err?:any)=>any)=>x(q,s,null);
     }
 }
+const SESSION_CONFIG = {
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.SESSION_SECRET,
+    signed: true
+};
 /**
  * 
  * @param app
  */
 export function config(
-    app:any,
+    app:Application,
     options?:SessionConfigOptions
  ) {
     options = Object.assign(new SessionConfigOptions(), options);
     if (options.sessionConfigs) options.sessionConfigs.forEach(
         sessionConfig=>sessionConfig()
-    )
+    );
+    app.use(session(SESSION_CONFIG));
+    app.use(PASSPORT.initialize());
+    app.use(PASSPORT.session());
 }
+

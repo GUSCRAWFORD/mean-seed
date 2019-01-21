@@ -6,7 +6,6 @@ import { SessionConfigOptions, Protection } from './session.config';
 import { GET_PROFILE_FACTORY, HANDLE_LOGIN_FACTORY, HANDLE_LOGOUT_FACTORY, AUTHENTICATE_FACTORY, VALID_OAUTH2 } from '../services/session-gapps';
 import { Passport, Authenticator } from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import * as session from 'express-session';
 import { Handler } from 'express';
 export * from './session.config';
 export class GAppsService {
@@ -27,7 +26,7 @@ export class GAppsSessionConfigOptions extends SessionConfigOptions {
     scope?:string[]=process.env.SESSION_GAPPS_SCOPE&&process.env.SESSION_GAPPS_SCOPE.split(/\s*,\s*/)||['email','profile'];
     loginPath?:string = process.env.SESSION_GAPPS_LOGIN_PATH||'/users/login';
     logoutPath?:string = process.env.SESSION_GAPPS_LOGOUT_PATH||`/users/logout`;
-    redirectPath?:string = process.env.SESSION_GAPPS_REDIRECT_PATH||`/users/oauth2`;
+    redirectPath?:string = process.env.SESSION_GAPPS_OAUTH2_CALLBACK||`/users/oauth`;
     onLogin?:(profile:{id:string,displayName:string})=>Promise<any>;
     onLogout?:(username:string)=>Promise<any>;
     onAuthenticate?:(success:any,req:any)=>Promise<any>;
@@ -62,9 +61,9 @@ export function config(
                 passReqToCallback:true,
                 secretOrKey: options.secret,
 
-                clientID: process.env.G_APPS_CLIENT_ID,
-                clientSecret: process.env.G_APPS_CLIENT_SECRET,
-                callbackURL: process.env.G_APPS_OAUTH2_CALLBACK,
+                clientID: process.env.SESSION_GAPPS_CLIENT_ID,
+                clientSecret: process.env.SESSION_GAPPS_CLIENT_SECRET,
+                callbackURL: process.env.SESSION_GAPPS_OAUTH2_CALLBACK,
                 accessType: 'offline'
             },
             //(req:any, decodedJwt:any, done:any)
@@ -86,6 +85,14 @@ export function config(
     GAppsService.intance.session[options.headerName as string] = new GAppsProtection({ /** other paths? */ }, AUTHENTICATE_FACTORY(options, PASSPORT as any));
     mapRoutes(app, options, PASSPORT);
     return app;
+}
+function configSerialization(PASSPORT: any) {
+    PASSPORT.serializeUser((user, callback)=>{
+        callback(null, user);
+    });
+    PASSPORT.deserializeUser((obj, callback)=>{
+        callback(null, obj);
+    });
 }
 function mapRoutes (app:any, options: GAppsSessionConfigOptions, PASSPORT: any) {
     app.post(`${options.loginPath}`, HANDLE_LOGIN_FACTORY(options));

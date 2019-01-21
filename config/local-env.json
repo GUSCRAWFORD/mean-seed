@@ -1,8 +1,9 @@
 {
-    "JYV_CONFIG_DEBUG":"query",
+    "JYV_CONFIG_DEBUG":"gapps-oauth",
 
-    "SESSION_HEADER":"x-token",
     "SESSION_SECRET":"session-secret",
     
-    "SYSTEM_PASSWORD":"pass!"
+    "SESSION_GAPPS_CLIENT_ID":"<gapps-client>",
+    "SESSION_GAPPS_CLIENT_SECRET":"<gapps-client-secret>",
+    "SESSION_GAPPS_OAUTH2_CALLBACK":"/users/oauth"
 }
