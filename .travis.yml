@@ -9,23 +9,23 @@ before_script:
   > ./cc-test-reporter
 - chmod +x ./cc-test-reporter
 - "./cc-test-reporter before-build"
-- yarn predeploy
+# - yarn predeploy
 script: yarn install && yarn test
 after_script:
 - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
-deploy:
-  provider: elasticbeanstalk
-  edge:
-    branch: ebignore
-  access_key_id:
-    secure: oleRyNHJ1G4IpJru1ObmyejPn1szlVQJ1zzWCBKSyYsgMnv99kG2RHpMHc7/L6PAu9/vLxBxF9SDNIo0xYSw4LvG0NHfc4G1AHRZ082eg/ZvdrGfhfgq1UowwQolGdgkUtY8o8wpvJQ5wo3AdKeiBvQ4eMUIWw9H0jO8KCx+JfmAcmKWVh1HZqrff+hS1fNeupGuciCo8P4H8uMEWbmVQkETVSCR+pSPLEWRBuAAt1dgU/wK7cbKWm+fc2TOq9Q25J2n3AvWKNe86trBEdyU8bmHH/6GpBHWzp9uEH0s46qDaC7yxQErYjQJUTsaY2RPlfGyVDv04GNc8cAnWmLlklb8MpY/y73WU2nwKIXOUUmPa74kRxReNwU4PxKVrJ6HcnkdRuOale5dCFa07qO8MiPC75khYy9dgroeqOKk7DIC8MS7EMINuqAARyxRt7Xj0XE2gEQvNiNgorkJAl9ylL3NkvszynPULu6sHEMGX3lKtc9LPvIBEmSHb9RPeh2Uddg+jo14PY/TSh0Tom6vCZAZlgAcv+HggyI4kRz8wCB001mmMnlufp+ggrRDn5MsXDZAzQfQxngnAIRNb4w9y904EDtgMXhX5Ccr0+ku/OQkhstOUjvklgvg95QAXxPb24IQLTH5J9sgvg4s5nAj6RQcU3LEgD5oRiVdLe4avI0=
-  secret_access_key:
-    secure: DBjRkczQm/brnYyceZiyT7E24tGl2a/1UnpgT6k3ps+kk9I969PbelX5g1YjuunEnmJf9FilFkCWHg5n56XLalcC0k6ND8ml8VmtGvJd4q3b0ioMV8AKoad9+7qNL6yXHc71jiwRrInqTu8BkXwA+3eNAvzz+kgHjnXvlY8ps0m+an57MtPB8JqOhPd5Sfc0wjKl3ifYUrgOftOMs9xgdyyjaU4dFm9mydxLG+vzrtPimZf06HF7+pGbqBYtiub3ahPoxqThdoFBpT0xtl0k+p3Uok1cspQmnAHvB54X45ramNx2v4g+XpifFALA57LazUGe7TzW2Qo9ekeLl6PwoNJPYd5rT3UnNs5QsenqVYZP10CnPL32AKUVmwyY9f0mlQRaQ8xJ9gdmALWmZMwCuygG1pc98qj9ex/dC3J0wXK0eidW3QyO2Muu1L3+8IHDnt261IqYLwM5RQrvyYWYzWBB8fWhE1bxsvjaNdrT7V/wiUAHB5bcKBmSM246kvma6DrA9mGxS0LFhbVriZ+vbqqN6K1GCN8pV6UpNbaMMHwItBsvAcKGpscr4pwJOf59ymbhjm0E2lLPZZqy0mvUuBa38I/sH2QFNsrm00X0p/8VbmlpWE48BpQpDYzx0AvwWd5BFbCSUKoGt1PeRH9oYQs/eHyoAGt8IBde6abKjwc=
-  region: us-east-1
-  app: guscrawford.com
-  env: test-guscrawford
-  bucket_name: elasticbeanstalk-us-east-1-479868173489
-  skip_cleanup: true
-  on:
-    repo: GUSCRAWFORD/mean-seed
-    branch: guscrawford.com
+# deploy:
+#   provider: elasticbeanstalk
+#   edge:
+#     branch: ebignore
+#   access_key_id:
+#     secure: oleRyNHJ1G4IpJru1ObmyejPn1szlVQJ1zzWCBKSyYsgMnv99kG2RHpMHc7/L6PAu9/vLxBxF9SDNIo0xYSw4LvG0NHfc4G1AHRZ082eg/ZvdrGfhfgq1UowwQolGdgkUtY8o8wpvJQ5wo3AdKeiBvQ4eMUIWw9H0jO8KCx+JfmAcmKWVh1HZqrff+hS1fNeupGuciCo8P4H8uMEWbmVQkETVSCR+pSPLEWRBuAAt1dgU/wK7cbKWm+fc2TOq9Q25J2n3AvWKNe86trBEdyU8bmHH/6GpBHWzp9uEH0s46qDaC7yxQErYjQJUTsaY2RPlfGyVDv04GNc8cAnWmLlklb8MpY/y73WU2nwKIXOUUmPa74kRxReNwU4PxKVrJ6HcnkdRuOale5dCFa07qO8MiPC75khYy9dgroeqOKk7DIC8MS7EMINuqAARyxRt7Xj0XE2gEQvNiNgorkJAl9ylL3NkvszynPULu6sHEMGX3lKtc9LPvIBEmSHb9RPeh2Uddg+jo14PY/TSh0Tom6vCZAZlgAcv+HggyI4kRz8wCB001mmMnlufp+ggrRDn5MsXDZAzQfQxngnAIRNb4w9y904EDtgMXhX5Ccr0+ku/OQkhstOUjvklgvg95QAXxPb24IQLTH5J9sgvg4s5nAj6RQcU3LEgD5oRiVdLe4avI0=
+#   secret_access_key:
+#     secure: DBjRkczQm/brnYyceZiyT7E24tGl2a/1UnpgT6k3ps+kk9I969PbelX5g1YjuunEnmJf9FilFkCWHg5n56XLalcC0k6ND8ml8VmtGvJd4q3b0ioMV8AKoad9+7qNL6yXHc71jiwRrInqTu8BkXwA+3eNAvzz+kgHjnXvlY8ps0m+an57MtPB8JqOhPd5Sfc0wjKl3ifYUrgOftOMs9xgdyyjaU4dFm9mydxLG+vzrtPimZf06HF7+pGbqBYtiub3ahPoxqThdoFBpT0xtl0k+p3Uok1cspQmnAHvB54X45ramNx2v4g+XpifFALA57LazUGe7TzW2Qo9ekeLl6PwoNJPYd5rT3UnNs5QsenqVYZP10CnPL32AKUVmwyY9f0mlQRaQ8xJ9gdmALWmZMwCuygG1pc98qj9ex/dC3J0wXK0eidW3QyO2Muu1L3+8IHDnt261IqYLwM5RQrvyYWYzWBB8fWhE1bxsvjaNdrT7V/wiUAHB5bcKBmSM246kvma6DrA9mGxS0LFhbVriZ+vbqqN6K1GCN8pV6UpNbaMMHwItBsvAcKGpscr4pwJOf59ymbhjm0E2lLPZZqy0mvUuBa38I/sH2QFNsrm00X0p/8VbmlpWE48BpQpDYzx0AvwWd5BFbCSUKoGt1PeRH9oYQs/eHyoAGt8IBde6abKjwc=
+#   region: us-east-1
+#   app: guscrawford.com
+#   env: test-guscrawford
+#   bucket_name: elasticbeanstalk-us-east-1-479868173489
+#   skip_cleanup: true
+#   on:
+#     repo: GUSCRAWFORD/mean-seed
+#     branch: guscrawford.com
