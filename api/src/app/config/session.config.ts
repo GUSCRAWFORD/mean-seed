@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import * as session from 'express-session';
 
 export const DEFAULT_SESSION_SECRET = process.env.SESSION_SECRET || 'hardcoded-secret';
 export const DEFAULT_SESSION_HEADER = process.env.SESSION_HEADER || 'x-token';
