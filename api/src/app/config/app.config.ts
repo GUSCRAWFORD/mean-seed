@@ -15,8 +15,7 @@ const createError = require('http-errors');
 export const DEFAULT_PROFILE = Promise.resolve(Object.assign({},{username:'default'}));
 export const config = function (app:Application) {
   if (DEBUG(DEBUG_TOPICS)) {
-    var configSequence = new Sequence('configSequence');
-    console.info(`⚙️  ${configSequence.label}  Configuring routes...`);
+    console.info(`⚙️  ${Sequence.$('configSequence').label}  Configuring routes...`);
   }
   routes(app);
   /**
@@ -39,5 +38,5 @@ export const config = function (app:Application) {
   app.use(function(req, res, next) {
     next(createError(404));
   });
-
+  Sequence.empty('configSequence');
 }

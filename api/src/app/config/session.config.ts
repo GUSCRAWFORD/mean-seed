@@ -43,19 +43,19 @@ export function config(
  ) {
     options = Object.assign(new SessionConfigOptions(), options);
 
-    if (DEBUG(DEBUG_TOPIC))  console.info(`⚙️  👤  ${Sequence.named.configSequence.label}  Use Express-Session`);
+    if (DEBUG(DEBUG_TOPIC))  console.info(`⚙️  👤  ${Sequence.$('configSequence').label}  Use Express-Session`);
     app.use(session(SESSION_CONFIG));
     
     if (options.sessionConfigs) options.sessionConfigs.forEach(
         sessionConfig=>{
-            if (DEBUG(DEBUG_TOPIC))  console.info(`⚙️  👤  ${Sequence.named.configSequence.label}  Sub-session Config`);
+            if (DEBUG(DEBUG_TOPIC))  console.info(`⚙️  👤  ${Sequence.$('configSequence').label}  Sub-session Config`);
             sessionConfig(PASSPORT /* singleton-middleware injections */);
         }
     )
 
-    if (DEBUG(DEBUG_TOPIC))  console.info(`⚙️  👤  ${Sequence.named.configSequence.label}  Initialize Passport`);
+    if (DEBUG(DEBUG_TOPIC))  console.info(`⚙️  👤  ${Sequence.$('configSequence').label}  Initialize Passport`);
     app.use(PASSPORT.initialize());
 
-    if (DEBUG(DEBUG_TOPIC))  console.info(`⚙️  👤  ${Sequence.named.configSequence.label}  Use Passport-Session`);
+    if (DEBUG(DEBUG_TOPIC))  console.info(`⚙️  👤  ${Sequence.$('configSequence').label}  Use Passport-Session`);
     app.use(PASSPORT.initialize());
 }
