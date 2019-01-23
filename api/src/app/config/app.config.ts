@@ -24,13 +24,14 @@ export const config = function (app:Application) {
    */
   session(app,{ // Run top-level session configurations
     sessionConfigs:[
-      ()=>gapps(app, {  // Configure specific session providers and types
+      (PASSPORT:any)=>gapps(app, {  // Configure specific session providers and types
         /** pass config options here */
         scope: ['email', 'profile'],
         onLogin:(proflie)=>DEFAULT_PROFILE,
         onLogout:(username)=>Promise.resolve({}),
         onProfile:(username)=>DEFAULT_PROFILE
-      })
+      },
+      PASSPORT)
     ]
   });
   errors(app); // Run error config for application
