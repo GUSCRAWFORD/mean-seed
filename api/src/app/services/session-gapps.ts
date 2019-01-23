@@ -9,6 +9,9 @@ LOGIN_FAILED = (req:Request) => `❌  👤  Login failed ${req&&req.body?('for '
 DEBUG_TOPIC = 'gapps-oauth';
 export const GET_PROFILE_FACTORY = (options:GAppsSessionConfigOptions) => async function getProfile(req:any,res:any,next:any) {
     let profile: any = req.user;
+    if (DEBUG(DEBUG_TOPIC)) {
+        console.info(`👤  🔎  ${req.user} claiming profile:\n${JSON.stringify(req.session.user)}`);
+    }
     if (options.onProfile)
         profile = await options.onProfile(req.user);
     res.json(profile);
@@ -33,7 +36,7 @@ export const HANDLE_LOGIN_ERROR = (e:any, req:Request, next:(args?:any)=>any)=> 
 }
 export const HANDLE_LOGOUT_FACTORY = (options:GAppsSessionConfigOptions) => async function handleLogout(req:any, res:any, next:any) {
     let receipt:any = req.user;
-    if (DEBUG(DEBUG_TOPIC)) console.info(`👤  🚪  ${req.user.sub} logged out...`);
+    if (DEBUG(DEBUG_TOPIC)) console.info(`👤  🚪  ${req.user} logged out...`);
     try {
         if (options.onLogout)
             receipt = await options.onLogout(req.user);
