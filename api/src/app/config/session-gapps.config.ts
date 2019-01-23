@@ -4,7 +4,6 @@
 import { DEBUG } from '../services/debug';
 import { SessionConfigOptions, Protection } from './session.config';
 import { GET_PROFILE_FACTORY, HANDLE_LOGIN_FACTORY, HANDLE_LOGOUT_FACTORY, AUTHENTICATE_FACTORY, VALID_OAUTH2 } from '../services/session-gapps';
-import { Passport, Authenticator } from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Handler } from 'express';
 export * from './session.config';
@@ -51,9 +50,9 @@ export function extractProfile (profile) {
  */
 export function config(
     app:any,
-    options: GAppsSessionConfigOptions
+    options: GAppsSessionConfigOptions,
+    PASSPORT: any
 ) {
-    const PASSPORT = new Passport();
     options = Object.assign(new GAppsSessionConfigOptions(),options);
     PASSPORT.use(
         new GoogleStrategy(
