@@ -24,9 +24,9 @@ export class GAppsProtection extends Protection {
 }
 export class GAppsSessionConfigOptions extends SessionConfigOptions {
     scope?:string[]=process.env.SESSION_GAPPS_SCOPE&&process.env.SESSION_GAPPS_SCOPE.split(/\s*,\s*/)||['email','profile'];
-    loginPath?:string = process.env.SESSION_GAPPS_LOGIN_PATH||'/users/login';
-    logoutPath?:string = process.env.SESSION_GAPPS_LOGOUT_PATH||`/users/logout`;
-    redirectPath?:string = process.env.SESSION_GAPPS_OAUTH2_CALLBACK||`/users/oauth`;
+    loginPath?:string = process.env.SESSION_GAPPS_LOGIN_PATH||`/${process.env.API_ROOT||''}/users/login`;
+    logoutPath?:string = process.env.SESSION_GAPPS_LOGOUT_PATH||`/${process.env.API_ROOT||''}/users/logout`;
+    redirectPath?:string = process.env.SESSION_GAPPS_OAUTH2_CALLBACK||`/${process.env.API_ROOT||''}/users/oauth`;
     onLogin?:(profile:{id:string,displayName:string})=>Promise<any>;
     onLogout?:(username:string)=>Promise<any>;
     onAuthenticate?:(success:any,req:any)=>Promise<any>;
