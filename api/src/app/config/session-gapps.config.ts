@@ -93,8 +93,8 @@ function configSerialization(PASSPORT: any) {
     });
 }
 function mapRoutes (app:any, options: GAppsSessionConfigOptions, PASSPORT: any) {
-    app.post(`${options.loginPath}`, HANDLE_LOGIN_FACTORY(options));
-    app.get(`${options.loginPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), GET_PROFILE_FACTORY(options));
+    app.get(`${options.loginPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), HANDLE_LOGIN_FACTORY(options));
+    app.post(`${options.loginPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), GET_PROFILE_FACTORY(options));
     app.get(`${options.logoutPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), HANDLE_LOGOUT_FACTORY(options));
     app.post(`${options.logoutPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), HANDLE_LOGOUT_FACTORY(options));
     app.put(`${options.logoutPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), HANDLE_LOGOUT_FACTORY(options));
