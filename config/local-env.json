@@ -1,5 +1,8 @@
 {
-    "JYV_CONFIG_DEBUG":"gapps-oauth",
+    "HOST":"localhost",
+    "API_ROOT":"",
+    "DEBUG":"session",
+    "JYV_CONFIG_DEBUG":"query",
 
     "SESSION_SECRET":"session-secret",
     

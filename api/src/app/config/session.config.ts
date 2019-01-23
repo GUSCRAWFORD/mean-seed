@@ -1,7 +1,8 @@
-import { Request, Response, Application } from "express";
-
+import { Request, Response, Application } from 'express';
 import * as session from 'express-session';
-import * as PASSPORT from 'passport';
+import { Passport, Authenticator } from 'passport';
+import { DEBUG, Sequence } from '../services';
+const DEBUG_TOPIC='session';
 export const DEFAULT_SESSION_SECRET = process.env.SESSION_SECRET || 'hardcoded-secret';
 export const DEFAULT_SESSION_HEADER = process.env.SESSION_HEADER || 'x-token';
 export class SessionConfigOptions {
@@ -28,9 +29,10 @@ export class Protection {
 const SESSION_CONFIG = {
     resave: false,
     saveUninitialized: false,
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET||DEFAULT_SESSION_SECRET,
     signed: true
 };
+const PASSPORT = new Passport();
 /**
  * 
  * @param app
@@ -40,11 +42,20 @@ export function config(
     options?:SessionConfigOptions
  ) {
     options = Object.assign(new SessionConfigOptions(), options);
-    if (options.sessionConfigs) options.sessionConfigs.forEach(
-        sessionConfig=>sessionConfig()
-    );
-    app.use(session(SESSION_CONFIG));
-    app.use(PASSPORT.initialize());
-    app.use(PASSPORT.session());
-}
 
+    if (DEBUG(DEBUG_TOPIC))  console.info(`⚙️  👤  ${Sequence.named.configSequence.label}  Use Express-Session`);
+    app.use(session(SESSION_CONFIG));
+    
+    if (options.sessionConfigs) options.sessionConfigs.forEach(
+        sessionConfig=>{
+            if (DEBUG(DEBUG_TOPIC))  console.info(`⚙️  👤  ${Sequence.named.configSequence.label}  Sub-session Config`);
+            sessionConfig(PASSPORT /* singleton-middleware injections */);
+        }
+    )
+
+    if (DEBUG(DEBUG_TOPIC))  console.info(`⚙️  👤  ${Sequence.named.configSequence.label}  Initialize Passport`);
+    app.use(PASSPORT.initialize());
+
+    if (DEBUG(DEBUG_TOPIC))  console.info(`⚙️  👤  ${Sequence.named.configSequence.label}  Use Passport-Session`);
+    app.use(PASSPORT.initialize());
+}

@@ -1,4 +1,4 @@
-
+const DEBUG_TOPICS='*';
 /**
  * Tie your middleware together in this root process start configuration:
  */
@@ -7,12 +7,18 @@ import { config as errors } from './errors.config';   // Configure errors for ot
 import { config as session} from './session.config';  // Configure session fundamentals
 import { config as gapps } from './session-gapps.config'; // Configure gapps specifics
 import { Application } from 'express';
+import { DEBUG, Sequence } from '../services';
 const createError = require('http-errors');
 /**
  * Import singletons needed to control middleware
  */
 export const DEFAULT_PROFILE = Promise.resolve(Object.assign({},{username:'default'}));
 export const config = function (app:Application) {
+  if (DEBUG(DEBUG_TOPICS)) {
+    var configSequence = new Sequence('configSequence');
+    console.info(`⚙️  ${configSequence.label}  Configuring routes...`);
+  }
+  routes(app);
   /**
    * Config services
    */
@@ -27,7 +33,6 @@ export const config = function (app:Application) {
       })
     ]
   });
-  routes(app);
   errors(app); // Run error config for application
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
