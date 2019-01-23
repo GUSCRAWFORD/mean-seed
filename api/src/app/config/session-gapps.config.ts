@@ -58,9 +58,6 @@ export function config(
     PASSPORT.use(
         new GoogleStrategy(
             {
-                passReqToCallback:true,
-                secretOrKey: options.secret,
-
                 clientID: process.env.SESSION_GAPPS_CLIENT_ID,
                 clientSecret: process.env.SESSION_GAPPS_CLIENT_SECRET,
                 callbackURL: process.env.SESSION_GAPPS_OAUTH2_CALLBACK,
@@ -84,6 +81,7 @@ export function config(
     );
     GAppsService.intance.session[options.headerName as string] = new GAppsProtection({ /** other paths? */ }, AUTHENTICATE_FACTORY(options, PASSPORT as any));
     mapRoutes(app, options, PASSPORT);
+    configSerialization(PASSPORT);
     return app;
 }
 function configSerialization(PASSPORT: any) {
@@ -101,64 +99,4 @@ function mapRoutes (app:any, options: GAppsSessionConfigOptions, PASSPORT: any) 
     app.post(`${options.logoutPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), HANDLE_LOGOUT_FACTORY(options));
     app.put(`${options.logoutPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), HANDLE_LOGOUT_FACTORY(options));
     app.get(`${options.redirectPath}`, AUTHENTICATE_FACTORY(options, PASSPORT), VALID_OAUTH2(options));
-}
-
-
-function configOLD(router, passport, ProfilesController) {
-    // Login
-    // https://cloud.google.com/nodejs/getting-started/authenticate-users
-    router.get(
-        // Login url
-        '/login',
-    
-        // Save the url of the user's current page so the app can redirect back to
-        // it after authorization
-        async (req, res, next) => {
-        if (req.query.return) {
-            (req as any).session.oauth2return = req.query.return;
-        }
-        next();
-        },
-    
-        // Start OAuth 2 flow using Passport.js
-        passport.authenticate('google', { scope: ['email', 'profile'] })
-    );
-    // OAuth Redirect
-    router.get(
-        // OAuth 2 callback url. Use this url to configure your OAuth client in the
-        // Google Developers console
-        '/oauth2',
-    
-        // Finish OAuth 2 flow using Passport.js
-        passport.authenticate('google', { scope: ['email', 'profile'] }),
-    
-        // Redirect back to the original page, if any
-        async (req:any&{user:any}, res, next) => {
-        const redirect = (req as any).session.oauth2return || '/';
-        delete (req as any).session.oauth2return;
-        try {
-            if (req.user) {
-            var profileName = `${req.user.id}-${req.user.displayName}`,
-                existingProfile = await ProfilesController.instance.read(profileName);
-            if (!existingProfile) await ProfilesController.instance.create({
-                name:profileName,
-                roles:[1]
-            });
-            }
-        res.redirect(redirect);
-        }
-        catch (ex) {
-            console.error(ex);
-            next(ex);
-        }
-        }
-    );
-    router.get('/logout', (req, res) => {
-        (req as any).logout();
-        res.redirect('/');
-    });
-    
-    router.get('/me', (req, res, next)=>{
-        res.json((req as any).user || {});
-    });
 }
