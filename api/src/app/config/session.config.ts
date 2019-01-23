@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as session from 'express-session';
-
+import { DEBUG } from "../services";
+const DEBUG_TOPIC='session';
 export const DEFAULT_SESSION_SECRET = process.env.SESSION_SECRET || 'hardcoded-secret';
 export const DEFAULT_SESSION_HEADER = process.env.SESSION_HEADER || 'x-token';
 export class SessionConfigOptions {
@@ -32,6 +33,9 @@ export function config(
     app:any,
     options?:SessionConfigOptions
  ) {
+    if (DEBUG(DEBUG_TOPIC)) {
+        var sessionConfigSe
+    }
     options = Object.assign(new SessionConfigOptions(), options);
     if (options.sessionConfigs) options.sessionConfigs.forEach(
         sessionConfig=>sessionConfig()
