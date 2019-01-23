@@ -11,8 +11,13 @@ export class Sequence {
         if (name) Sequence.named[name] = this;
     }
     static named:{[key:string]:Sequence} = {};
-    static empty() {
+    static empty(name?:string) {
+        if (name)
+            delete Sequence.named[name];
         Sequence.named = {};
+    }
+    static $(name:string, labels:string[]=[`1️⃣`,`2️⃣`,`2️⃣`,`4️⃣`,`5️⃣`,`6️⃣`,`7️⃣`,`8️⃣`,`9️⃣`,`🔟`,`*️⃣`]) {
+        return Sequence.named[name] || new Sequence(name, labels)
     }
     private step = 0;
     get label() {
